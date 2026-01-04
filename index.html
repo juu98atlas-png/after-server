@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AFTER.SERVER</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div id="logo">AFTER.SERVER</div>
+    <div id="user-profile" onclick="openProfile()">
+      <span id="user-nick">Convidado</span>
+      <span id="user-emblem">🛠️ Minerador</span>
+    </div>
+    <input type="text" id="search-bar" placeholder="Digite comando..." onkeydown="handleSearch(event)">
+  </header>
+
+  <main>
+    <section id="main-content">
+      <h1>Bem-vindo ao AFTER.SERVER</h1>
+      <div class="xp-container">
+        <div class="xp-bar">
+          <div id="xp-fill"></div>
+        </div>
+        <span id="level">Level: 1</span>
+        <span id="coins">Coins: 0</span>
+      </div>
+
+      <div id="artifacts">
+        <h2>Artefatos</h2>
+        <div id="artifact-list">
+          <!-- Artefatos importados aparecerão aqui -->
+        </div>
+      </div>
+    </section>
+
+    <section id="admin-section" class="hidden">
+      <h2>Área de Administração 🔒</h2>
+      <input type="password" id="admin-pass" placeholder="Digite a senha">
+      <button onclick="enterAdmin()">Entrar</button>
+      <div id="admin-tools" class="hidden">
+        <h3>Laboratório de Criação</h3>
+        <input type="file" id="import-3d" accept=".gbl" onchange="addArtifact(event)">
+      </div>
+    </section>
+  </main>
+
+  <audio id="click-sound" src="click.mp3" preload="auto"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
