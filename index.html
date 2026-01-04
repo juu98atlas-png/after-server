@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>AFTER.SERVER</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/perfil.css">
+  <link rel="stylesheet" href="css/loja.css">
+  <link rel="stylesheet" href="css/artefatos.css">
+</head>
+<body>
+  <!-- LANDING -->
+  <section id="hero">
+    <h1>AFTER.SERVER</h1>
+    <p class="subtitle">Um ecossistema digital vivo.<br>Evolua. Minere. Construa.</p>
+    <div class="hero-actions">
+      <button id="enterBtn">Entrar no Sistema</button>
+      <span class="note">Projeto em fase experimental</span>
+    </div>
+  </section>
+
+  <!-- APP -->
+  <main id="app" class="hidden">
+
+    <header class="topbar">
+      <div class="logo">AFTER.SERVER</div>
+      <div class="user-mini">
+        <span id="nickname">Visitante</span>
+        <span class="badge">⛏ Minerador</span>
+      </div>
+    </header>
+
+    <!-- PERFIL -->
+    <section class="profile" id="profileSection">
+      <h2>Perfil</h2>
+      <div class="stat"><label>Level</label><span id="level">1</span></div>
+      <div class="stat"><label>XP</label><div class="xp-bar"><div id="xpFill"></div></div></div>
+      <div class="stat"><label>Coins</label><span id="coins">0</span></div>
+      <div class="stat"><label>Buff</label><span id="buff">Nenhum</span></div>
+      <button id="mineBtn">Minerar XP</button>
+    </section>
+
+    <!-- ÁREAS -->
+    <section class="areas">
+      <h2>Áreas do Sistema</h2>
+      <div class="area locked">🧪 Laboratório <span>Em breve</span></div>
+      <div class="area" id="artefatosArea">🏆 Artefatos <span>Ver</span></div>
+      <div class="area" id="lojaArea">🛒 Loja <span>Entrar</span></div>
+      <div class="area">🧠 Comunidade <span>Restrito</span></div>
+      <div class="area">⚙️ Administração <span>Senha</span></div>
+    </section>
+
+    <!-- SALA DE ARTEFATOS -->
+    <section id="artefatosSection" class="hidden">
+      <h2>Sala de Artefatos</h2>
+      <input type="file" id="upload3D" accept=".glb,.gbl">
+      <div id="artefatosGrid"></div>
+    </section>
+
+    <!-- LOJA -->
+    <section id="lojaSection" class="hidden">
+      <h2>Loja AFTER.SERVER</h2>
+      <div id="lojaGrid"></div>
+    </section>
+
+  </main>
+
+  <!-- SONS -->
+  <audio id="clickSound" src="assets/click.mp3"></audio>
+  <audio id="levelupSound" src="assets/levelup.mp3"></audio>
+
+  <!-- SCRIPTS -->
+  <script src="script.js"></script>
+  <script src="modules/perfil.js"></script>
+  <script src="modules/artefatos.js"></script>
+  <script src="modules/loja.js"></script>
+</body>
+</html>
