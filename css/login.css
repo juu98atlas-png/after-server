@@ -1,0 +1,19 @@
+#loginScreen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  gap: 12px;
+}
+
+#loginScreen input, #loginScreen select {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  width: 200px;
+}
+
+#loginScreen button {
+  width: 220px;
+}
