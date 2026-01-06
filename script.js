@@ -14,8 +14,11 @@ mineBtn.addEventListener("click", () => {
 const gain = applyArtifactBonus(baseGain);
 xp += gain;
 
-  if (Math.random() < 0.35) {
-    coins++;
+  const coinChance = 0.3 + activeArtifact.coinBonus;
+
+if (Math.random() < coinChance) {
+  coins += 1;
+}
     coinsEl.textContent = coins;
   }
 
