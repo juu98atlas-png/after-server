@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>AFTER.SERVER</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <main id="app">
+
+    <header class="topbar">
+      <div class="logo">AFTER.SERVER</div>
+      <div class="user-mini">
+        <span id="nickname">Visitante</span>
+        <span class="badge">⛏ Minerador</span>
+      </div>
+    </header>
+
+    <section class="profile">
+      <h2>Perfil</h2>
+
+      <div class="stat">
+        <label>Level</label>
+        <span id="level">1</span>
+      </div>
+
+      <div class="stat">
+        <label>XP</label>
+        <div class="xp-bar">
+          <div id="xpFill"></div>
+        </div>
+      </div>
+
+      <div class="stat">
+        <label>Coins</label>
+        <span id="coins">0</span>
+      </div>
+
+      <button id="mineBtn">Minerar</button>
+    </section>
+
+    <section class="viewer">
+      <h2>Artefato Ativo</h2>
+      <model-viewer
+        src="artifact.glb"
+        camera-controls
+        auto-rotate
+        exposure="1"
+        shadow-intensity="1"
+        style="width:100%;height:320px;">
+      </model-viewer>
+    </section>
+
+  </main>
+
+  <!-- COMMAND BAR -->
+  <div id="commandBar">
+    <input id="commandInput" placeholder="Digite um comando..." />
+  </div>
+
+  <!-- ADMIN MODAL -->
+  <div id="adminModal" class="hidden">
+    <div class="admin-box">
+      <h2>🔐 Sala de Comando</h2>
+
+      <div id="passwordBox">
+        <input type="password" id="adminPassword" placeholder="Senha" />
+        <button id="confirmPassword">Entrar</button>
+      </div>
+
+      <div id="adminPanel" class="hidden">
+        <label>XP por clique
+          <input type="number" id="xpControl" />
+        </label>
+
+        <label>Multiplicador
+          <input type="number" step="0.1" id="multiplierControl" />
+        </label>
+
+        <button id="closeAdmin">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>
