@@ -1,20 +1,17 @@
-.chat-box {
+#chatPanel {
+  display: flex;
+  flex-direction: column;
+}
+
+#chatBox {
   height: 200px;
   background: rgba(0,0,0,0.3);
-  border-radius: 10px;
-  padding: 10px;
+  border-radius: 12px;
   overflow-y: auto;
-  margin-bottom: 10px;
+  padding: 10px;
+  margin-bottom: 8px;
 }
 
-#chatInput {
-  width: calc(100% - 90px);
-  padding: 8px;
-  border-radius: 8px;
-  border: none;
-}
-
-#sendBtn {
-  width: 70px;
-  margin-left: 10px;
+#chatBox p {
+  margin-bottom: 6px;
 }
