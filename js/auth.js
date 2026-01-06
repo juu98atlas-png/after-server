@@ -4,24 +4,31 @@ const classSelect = document.getElementById("classSelect");
 const passwordInput = document.getElementById("password");
 const loginBtn = document.getElementById("loginBtn");
 
+let currentUser = null;
+
 loginBtn.addEventListener("click", () => {
   const nickname = nicknameInput.value.trim();
-  const userClass = classSelect.value;
+  const className = classSelect.value;
   const password = passwordInput.value;
 
-  if (!nickname || !userClass || !password) return alert("Preencha todos os campos");
+  if (!nickname || !className || !password) return alert("Preencha todos os campos!");
 
-  let user = db.users.find(u => u.nickname === nickname);
+  let user = getUser(nickname, password);
+
   if (!user) {
-    // cadastro
-    user = { nickname, class: userClass, password, level: 1, xp: 0, coins: 0 };
-    db.users.push(user);
-    saveDB();
-  } else if (user.password !== password) {
-    return alert("Senha incorreta!");
+    // Criar novo
+    user = { nickname, className, password, xp: 0, level: 1, coins: 0 };
+    saveUser(user);
   }
 
-  loginSection.classList.add("hidden");
-  window.currentUser = user;
-  updateStats();
+  currentUser = user;
+  loginSection.style.display = "none";
+
+  // Atualizar dashboard
+  updateDashboard();
 });
+
+function updateDashboard() {
+  document.getElementById("level").textContent = currentUser.level;
+  document.getElementById("coins").textContent = currentUser.coins;
+}
