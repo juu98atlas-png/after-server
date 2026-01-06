@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>AFTER.SERVER</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <h1>AFTER.SERVER</h1>
+    <span class="role">Visitante · Minerador</span>
+  </header>
+
+  <main class="container">
+
+    <section class="card">
+      <h2>Perfil</h2>
+
+      <div class="stat">
+        <span>Level</span>
+        <strong id="level">1</strong>
+      </div>
+
+      <div class="xp-bar">
+        <div id="xp-fill"></div>
+      </div>
+
+      <div class="stat">
+        <span>Coins</span>
+        <strong id="coins">0</strong>
+      </div>
+
+      <button id="mineBtn">Minerar XP</button>
+    </section>
+
+    <section class="card">
+      <h2>Laboratório de Artefatos</h2>
+      <p class="hint">
+        (3D será ativado depois — agora estamos estabilizando o sistema)
+      </p>
+
+      <div class="artifact-placeholder">
+        ARTEFATO SLOT
+      </div>
+    </section>
+
+  </main>
+
+  <!-- JS (SEM module, SEM import) -->
+  <script src="script.js"></script>
+</body>
+</html>
