@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>AFTER.SERVER</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <!-- Fonte futurista -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
 
@@ -20,10 +20,10 @@
 
 <body>
 
-  <!-- LOGIN / CADASTRO -->
-  <div id="loginScreen">
-    <h1>AFTER.SERVER</h1>
-    <input type="text" id="nickname" placeholder="Apelido">
+  <!-- LOGIN -->
+  <section id="loginScreen">
+    <h2>AFTER.SERVER LOGIN</h2>
+    <input type="text" id="username" placeholder="Apelido">
     <select id="classSelect">
       <option value="Minerador">Minerador</option>
       <option value="Alcateia">Alcateia</option>
@@ -32,11 +32,11 @@
     </select>
     <input type="password" id="password" placeholder="Senha">
     <button id="loginBtn">Entrar</button>
-    <p id="loginError"></p>
-  </div>
+  </section>
 
-  <!-- DASHBOARD PRINCIPAL -->
-  <div id="dashboard" style="display:none;">
+  <!-- DASHBOARD -->
+  <main id="dashboard" class="hidden">
+
     <header class="topbar">
       <h1>AFTER.SERVER</h1>
       <div class="stats">
@@ -45,28 +45,24 @@
       </div>
     </header>
 
-    <main class="container">
+    <section class="container">
 
       <!-- MINERAÇÃO -->
-      <section class="panel">
+      <div class="panel">
         <h2>Mineração</h2>
-
         <div class="xp-wrapper">
           <div class="xp-bar">
             <div id="xpFill"></div>
           </div>
           <span id="xpText">0 / 100 XP</span>
         </div>
-
         <button id="mineBtn">⛏ Minerar</button>
-      </section>
+      </div>
 
       <!-- ARTEFATO 3D -->
-      <section class="panel">
+      <div class="panel">
         <h2>Artefato Ativo</h2>
-
         <model-viewer
-          id="artifactViewer"
           src="assets/artifacts/artifact.glb"
           alt="Artefato 3D"
           auto-rotate
@@ -74,23 +70,23 @@
           environment-image="neutral"
           exposure="1.2"
           shadow-intensity="1"
-          style="width: 100%; height: 320px;">
+          style="width:100%; height:320px;">
         </model-viewer>
-
-        <button id="buyBtn">🛒 Comprar Artefato</button>
+        <button id="buyArtifact">🛒 Comprar</button>
         <p class="hint">Artefato renderizado localmente</p>
-      </section>
+      </div>
 
       <!-- CHAT -->
-      <section class="panel">
+      <div class="panel">
         <h2>Chat Global</h2>
         <div id="chatBox" class="chat-box"></div>
         <input type="text" id="chatInput" placeholder="Digite sua mensagem...">
-        <button id="sendChatBtn">Enviar</button>
-      </section>
+        <button id="sendBtn">Enviar</button>
+      </div>
 
-    </main>
-  </div>
+    </section>
+
+  </main>
 
   <!-- JS -->
   <script src="js/auth.js"></script>
