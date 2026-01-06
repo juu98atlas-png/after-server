@@ -1,0 +1,110 @@
+<!DOCTYPE html><html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AFTER.SERVER</title>  <!-- Fonte Futurista -->  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">  <!-- CSS Global -->  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/panels.css">
+  <link rel="stylesheet" href="css/chat.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body><!-- ===================== SISTEMA ===================== --><div id="system-root">  <!-- TOPO FIXO -->  <header id="topbar">
+    <div class="logo">AFTER.SERVER</div>
+    <div class="system-status">
+      <span id="online-count">● Sistema Ativo</span>
+    </div>
+  </header>  <!-- PAINEL INICIAL -->  <section id="dashboard">
+    <h1>ECOSSISTEMA GLOBAL</h1><div class="class-stats">
+  <div class="class-card minerador">Mineradores <span id="count-minerador">0</span></div>
+  <div class="class-card alcateia">Alcateia <span id="count-alcateia">0</span></div>
+  <div class="class-card piratas">Piratas <span id="count-piratas">0</span></div>
+  <div class="class-card cupula">Cúpula <span id="count-cupula">0</span></div>
+</div>
+
+<div class="main-members">
+  <h2>Membros Principais</h2>
+  <div id="featured-members"></div>
+</div>
+
+  </section>  <!-- LOGIN / CADASTRO -->  <section id="auth-panel" class="panel">
+    <h2>Acesso ao Sistema</h2><input type="text" id="nickname" placeholder="Apelido">
+<select id="class-select">
+  <option value="">Escolha sua Classe</option>
+  <option value="Minerador">Minerador</option>
+  <option value="Alcateia">Alcateia</option>
+  <option value="Piratas">Piratas</option>
+  <option value="Cúpula">Cúpula</option>
+</select>
+<input type="password" id="password" placeholder="Senha">
+
+<button id="register-btn">Cadastrar</button>
+<button id="login-btn">Entrar</button>
+
+<div id="auth-feedback"></div>
+
+  </section>  <!-- APLICATIVO -->  <main id="app" class="hidden"><!-- PERFIL -->
+<section id="profile" class="panel">
+  <h2>Perfil do Usuário</h2>
+  <p><strong>Nome:</strong> <span id="user-name"></span></p>
+  <p><strong>Classe:</strong> <span id="user-class"></span></p>
+  <p><strong>Nível:</strong> <span id="user-level">1</span></p>
+
+  <div class="xp-container">
+    <div class="xp-bar"><div id="xp-fill"></div></div>
+    <span id="xp-text">0 / 100 XP</span>
+  </div>
+
+  <button id="mine-btn">⛏ Minerar</button>
+</section>
+
+<!-- ARTEFATO CENTRAL -->
+<section id="artifact-core" class="panel">
+  <h2>Artefato Central</h2>
+
+  <model-viewer
+    id="artifact-viewer"
+    src="assets/3d/artifact.glb"
+    auto-rotate
+    camera-controls
+    shadow-intensity="1"
+    style="width:100%; height:300px;">
+  </model-viewer>
+
+  <div class="artifact-info">
+    <p><strong>Raridade:</strong> Lendário</p>
+    <p><strong>Efeito:</strong> +25% Mineração</p>
+  </div>
+
+  <button class="buy-btn" onclick="window.open('https://jlfactoryswoadlyers.blogspot.com','_blank')">🛒 Comprar</button>
+</section>
+
+<!-- CHAT GLOBAL -->
+<section id="chat" class="panel">
+  <h2>Canal Global</h2>
+  <div id="chat-messages"></div>
+  <div class="chat-input">
+    <input type="text" id="chat-text" placeholder="Digite sua mensagem...">
+    <button id="send-chat">Enviar</button>
+  </div>
+</section>
+
+<!-- LOJA DE ARTEFATOS -->
+<section id="artifact-shop" class="panel">
+  <h2>Galeria de Artefatos</h2>
+  <div class="artifact-grid" id="artifact-grid">
+    <!-- Slots dinâmicos -->
+  </div>
+</section>
+
+  </main>  <!-- PAINEL ADMIN -->  <section id="admin-panel" class="hidden">
+    <h2>Sala de Comando</h2>
+    <input type="password" id="admin-pass" placeholder="Senha de Acesso">
+    <button id="admin-enter">Acessar</button><div id="admin-content" class="hidden">
+  <h3>Controle de Membros</h3>
+  <div id="admin-users"></div>
+</div>
+
+  </section>  <!-- BARRA DE COMANDO -->  <div id="command-bar">
+    <input type="text" id="command-input" placeholder="Digite um comando...">
+  </div></div><!-- Model Viewer --><script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script><!-- JS Principal --><script src="js/main.js"></script></body>
+</html>
