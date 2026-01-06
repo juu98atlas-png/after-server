@@ -1,0 +1,20 @@
+.chat-box {
+  height: 200px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 10px;
+  padding: 10px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+#chatInput {
+  width: calc(100% - 90px);
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+}
+
+#sendBtn {
+  width: 70px;
+  margin-left: 10px;
+}
