@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>AFTER.SERVER</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="logo">AFTER.SERVER</div>
+  <div class="user-mini">
+    <span>Visitante</span>
+    <span class="badge">⛏ Minerador</span>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="profile">
+  <h2>Perfil</h2>
+
+  <div class="stat">
+    <span>Level</span>
+    <span id="level">1</span>
+  </div>
+
+  <div class="stat">
+    <span>XP</span>
+    <div class="xp-bar">
+      <div id="xpFill"></div>
+    </div>
+  </div>
+
+  <div class="stat">
+    <span>Coins</span>
+    <span id="coins">0</span>
+  </div>
+
+  <button id="mineBtn">Minerar XP</button>
+</section>
+
+<section class="artifact">
+  <h2>Laboratório de Artefatos</h2>
+
+  <div class="viewer">
+    <canvas id="artifactCanvas"></canvas>
+  </div>
+
+  <div class="artifact-info">
+    <h3>Neural Core V1</h3>
+    <p>Artefato experimental do AFTER.SERVER.</p>
+    <span class="buff">+10% XP Mining</span>
+  </div>
+</section>
+
+</main>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>
