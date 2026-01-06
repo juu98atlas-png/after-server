@@ -1,73 +1,159 @@
-alert("SCRIPT CARREGOU");
+console.log("SCRIPT CARREGADO");
 
-let xp = 0;
-let level = 1;
-let coins = 0;
-let xpNeeded = 100;
-
-const config = {
-  xpPerClick: 10,
-  multiplier: 1
+// ===== BASE DE DADOS LOCAL =====
+const db = {
+  users: JSON.parse(localStorage.getItem("users")) || [],
+  classStats: JSON.parse(localStorage.getItem("classStats")) || {
+    Minerador: 0,
+    Alcateia: 0,
+    Piratas: 0,
+    Cúpula: 0
+  }
 };
 
-const xpFill = document.getElementById("xpFill");
-const levelSpan = document.getElementById("level");
-const coinsSpan = document.getElementById("coins");
-const mineBtn = document.getElementById("mineBtn");
+let currentUser = null;
 
-mineBtn.addEventListener("click", () => {
-  const gain = Math.floor(config.xpPerClick * config.multiplier);
-  xp += gain;
+// ===== ELEMENTOS =====
+const authScreen = document.getElementById("auth-screen");
+const appScreen = document.getElementById("app-screen");
+const loginBtn = document.getElementById("login-btn");
 
-  if (Math.random() < 0.3) coins++;
+const nicknameInput = document.getElementById("nickname");
+const classSelect = document.getElementById("class-select");
+const passwordInput = document.getElementById("password");
 
-  if (xp >= xpNeeded) {
-    xp -= xpNeeded;
-    level++;
-    xpNeeded = Math.floor(xpNeeded * 1.4);
-    levelSpan.textContent = level;
+const userNameSpan = document.getElementById("user-name");
+const userClassSpan = document.getElementById("user-class");
+const userLevelSpan = document.getElementById("user-level");
+
+const mineBtn = document.getElementById("mine-btn");
+const xpBar = document.getElementById("xp-bar");
+
+const chatMessages = document.getElementById("chat-messages");
+const chatInput = document.getElementById("chat-text");
+const sendChatBtn = document.getElementById("send-chat");
+
+const commandBar = document.getElementById("command-bar");
+const adminPanel = document.getElementById("admin-panel");
+
+// ===== LOGIN / CADASTRO =====
+loginBtn.addEventListener("click", () => {
+  const nick = nicknameInput.value.trim();
+  const userClass = classSelect.value;
+  const pass = passwordInput.value.trim();
+
+  if (!nick || !pass) {
+    alert("Preencha todos os campos");
+    return;
   }
 
-  coinsSpan.textContent = coins;
-  xpFill.style.width = Math.min((xp / xpNeeded) * 100, 100) + "%";
-});
+  let user = db.users.find(u => u.nick === nick);
 
-/* COMMAND SYSTEM */
-const commandInput = document.getElementById("commandInput");
-const adminModal = document.getElementById("adminModal");
-const passwordBox = document.getElementById("passwordBox");
-const adminPanel = document.getElementById("adminPanel");
-
-const adminPassword = document.getElementById("adminPassword");
-const confirmPassword = document.getElementById("confirmPassword");
-const closeAdmin = document.getElementById("closeAdmin");
-
-const xpControl = document.getElementById("xpControl");
-const multiplierControl = document.getElementById("multiplierControl");
-
-commandInput.addEventListener("keydown", e => {
-  if (e.key === "Enter" && commandInput.value === "/analise") {
-    adminModal.classList.remove("hidden");
-    commandInput.value = "";
-  }
-});
-
-confirmPassword.onclick = () => {
-  if (adminPassword.value === "0000") {
-    passwordBox.classList.add("hidden");
-    adminPanel.classList.remove("hidden");
-    xpControl.value = config.xpPerClick;
-    multiplierControl.value = config.multiplier;
+  if (!user) {
+    // CRIAR NOVO USUÁRIO
+    user = {
+      nick,
+      class: userClass,
+      pass,
+      level: 1,
+      xp: 0,
+      coins: 0,
+      skills: {}
+    };
+    db.users.push(user);
+    db.classStats[userClass]++;
+    saveDB();
   } else {
-    alert("Senha incorreta");
+    if (user.pass !== pass) {
+      alert("Senha incorreta");
+      return;
+    }
   }
-};
 
-xpControl.oninput = () => config.xpPerClick = Number(xpControl.value);
-multiplierControl.oninput = () => config.multiplier = Number(multiplierControl.value);
+  currentUser = user;
+  enterApp();
+});
 
-closeAdmin.onclick = () => {
-  adminModal.classList.add("hidden");
-  passwordBox.classList.remove("hidden");
-  adminPanel.classList.add("hidden");
-};
+// ===== ENTRAR NO APP =====
+function enterApp() {
+  authScreen.classList.remove("active");
+  appScreen.classList.add("active");
+
+  updateUserUI();
+  renderClassPanel();
+}
+
+// ===== ATUALIZAR UI =====
+function updateUserUI() {
+  userNameSpan.textContent = currentUser.nick;
+  userClassSpan.textContent = currentUser.class;
+  userLevelSpan.textContent = currentUser.level;
+  updateXPBar();
+}
+
+function updateXPBar() {
+  const percent = (currentUser.xp / 100) * 100;
+  xpBar.style.width = `${percent}%`;
+}
+
+// ===== SALVAR =====
+function saveDB() {
+  localStorage.setItem("users", JSON.stringify(db.users));
+  localStorage.setItem("classStats", JSON.stringify(db.classStats));
+}
+
+// ===== CLASSES =====
+function renderClassPanel() {
+  document.getElementById("count-minerador").textContent = db.classStats.Minerador;
+  document.getElementById("count-alcateia").textContent = db.classStats.Alcateia;
+  document.getElementById("count-piratas").textContent = db.classStats.Piratas;
+  document.getElementById("count-cupula").textContent = db.classStats.Cúpula;
+}
+
+// ===== MINERAÇÃO =====
+mineBtn.addEventListener("click", () => {
+  currentUser.xp += 10;
+  currentUser.coins += 1;
+
+  if (currentUser.xp >= 100) {
+    currentUser.xp = 0;
+    currentUser.level++;
+    alert("LEVEL UP!");
+  }
+
+  saveDB();
+  updateUserUI();
+});
+
+// ===== CHAT =====
+sendChatBtn.addEventListener("click", sendMessage);
+
+function sendMessage() {
+  const text = chatInput.value.trim();
+  if (!text) return;
+
+  const msg = document.createElement("div");
+  msg.textContent = `[${currentUser.class}] ${currentUser.nick} (Lv.${currentUser.level}): ${text}`;
+  chatMessages.appendChild(msg);
+
+  chatInput.value = "";
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// ===== COMANDOS =====
+commandBar.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    const cmd = commandBar.value.trim();
+    commandBar.value = "";
+
+    if (cmd === "/Analise") {
+      const senha = prompt("Senha de acesso:");
+      if (senha === "0000") {
+        adminPanel.classList.remove("hidden");
+        alert("Painel administrativo liberado");
+      } else {
+        alert("Senha incorreta");
+      }
+    }
+  }
+});
