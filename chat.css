@@ -1,0 +1,29 @@
+#chatPanel {
+  display: flex;
+  flex-direction: column;
+}
+
+#chatBox {
+  flex: 1;
+  min-height: 150px;
+  max-height: 300px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 12px;
+  padding: 10px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  font-size: 0.85rem;
+}
+
+#chatInput {
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  margin-bottom: 10px;
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+}
+
+#chatInput::placeholder {
+  color: rgba(255,255,255,0.5);
+}
