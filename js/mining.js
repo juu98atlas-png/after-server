@@ -5,30 +5,26 @@ const levelEl = document.getElementById("level");
 const coinsEl = document.getElementById("coins");
 
 mineBtn.addEventListener("click", () => {
-  if(!currentUser) return alert("Entre primeiro!");
-
-  let gain = Math.floor(Math.random()*12)+6;
+  const gain = Math.floor(Math.random() * 12) + 6;
   currentUser.xp += gain;
 
-  // drop raro
-  let rareDrop = false;
-  if(Math.random() < 0.15) {
+  if (Math.random() < 0.35) {
     currentUser.coins++;
-    coinsEl.textContent = currentUser.coins;
-    rareDrop = true;
   }
 
-  if(currentUser.xp >= 100) {
+  if (currentUser.xp >= 100) {
     currentUser.xp -= 100;
     currentUser.level++;
   }
 
-  let percent = Math.min((currentUser.xp / 100)*100, 100);
+  levelEl.textContent = currentUser.level;
+  coinsEl.textContent = currentUser.coins;
+  const percent = Math.min((currentUser.xp / 100) * 100, 100);
   xpFill.style.width = percent + "%";
   xpText.textContent = `${currentUser.xp} / 100 XP`;
-  levelEl.textContent = currentUser.level;
 
-  saveUser(currentUser);
-
-  if(rareDrop) alert("Drop Raro! +1 Coin");
+  // Salva progresso
+  const idx = users.findIndex(u => u.nickname === currentUser.nickname);
+  if (idx > -1) users[idx] = currentUser;
+  localStorage.setItem("users", JSON.stringify(users));
 });
