@@ -1,0 +1,25 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Orbitron', sans-serif;
+}
+
+body {
+  background: radial-gradient(circle at top, #ff8fa3, #0b0b0f 70%);
+  color: #fff;
+  min-height: 100vh;
+}
+
+.hidden { display: none; }
+
+button {
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ff6f91, #ffc75f);
+}
+
+button:active { transform: scale(0.97); }
