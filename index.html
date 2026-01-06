@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>After Server</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Three.js -->
+  <script src="https://unpkg.com/three@0.152.2/build/three.min.js"></script>
+  <script src="https://unpkg.com/three@0.152.2/examples/js/loaders/GLTFLoader.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <h1>⛏️ After Server</h1>
+
+  <section class="hud">
+    <div>XP: <span id="xp">0</span></div>
+    <div>Nível: <span id="level">1</span></div>
+    <div>Minério: <span id="ore">0</span></div>
+  </section>
+
+  <button id="mineBtn">Minerar</button>
+
+  <section class="viewer">
+    <canvas id="threeCanvas"></canvas>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
