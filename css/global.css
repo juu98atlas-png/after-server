@@ -1,162 +1,130 @@
-/* RESET GLOBAL */
+/* =========================
+   RESET E BASE GLOBAL
+========================= */
+
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Orbitron', system-ui, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
 }
+
+html, body {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at top, #0a0f1f, #05070d);
+    color: #e6e6e6;
+    overflow: hidden;
+}
+
+/* =========================
+   VARIÁVEIS DO SISTEMA
+========================= */
 
 :root {
-  --pink-hot: #ff6f91;
-  --pink-soft: #ff9fb8;
-  --yellow-hot: #ffc75f;
-  --bg-dark: #0b0b12;
-  --glass: rgba(255,255,255,0.08);
-  --glass-strong: rgba(255,255,255,0.14);
-  --border-glass: rgba(255,255,255,0.18);
+    --neon-blue: #00f0ff;
+    --neon-purple: #8b5cf6;
+    --neon-green: #00ff9c;
+    --danger-red: #ff4d4d;
+
+    --bg-panel: rgba(15, 20, 40, 0.85);
+    --bg-glass: rgba(255, 255, 255, 0.05);
+
+    --border-glow: 0 0 12px rgba(0, 240, 255, 0.35);
+    --text-muted: #9aa4bf;
 }
 
-body {
-  background: radial-gradient(circle at top, var(--pink-soft), var(--bg-dark) 70%);
-  color: #fff;
-  min-height: 100vh;
-  overflow-x: hidden;
+/* =========================
+   ESTRUTURA PRINCIPAL
+========================= */
+
+#app {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
-/* CONTAINERS */
-main {
-  max-width: 1200px;
-  margin: auto;
-  padding: 24px;
+/* =========================
+   PAINÉIS (GLASS + PROFUNDIDADE)
+========================= */
+
+.panel {
+    background: var(--bg-panel);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    box-shadow: var(--border-glow);
+    padding: 16px;
 }
 
-/* GLASS EFFECT */
-.glass {
-  background: var(--glass);
-  border: 1px solid var(--border-glass);
-  backdrop-filter: blur(10px);
-  border-radius: 14px;
-}
+/* =========================
+   BOTÕES (3D + FUTURISTA)
+========================= */
 
-/* HEADERS */
-h1, h2, h3 {
-  letter-spacing: 1px;
-  font-weight: 700;
-}
-
-h1 {
-  font-size: 2.8rem;
-}
-
-h2 {
-  font-size: 1.6rem;
-}
-
-/* BUTTONS */
 button {
-  padding: 14px 22px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  font-weight: 700;
-  color: #000;
-  background: linear-gradient(135deg, var(--pink-hot), var(--yellow-hot));
-  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+    background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+    border: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.4);
+    transition: all 0.15s ease;
 }
 
 button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0, 240, 255, 0.4);
 }
 
 button:active {
-  transform: scale(0.96);
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.6);
 }
 
-/* PANELS */
-.panel {
-  padding: 20px;
-  margin-bottom: 20px;
+/* =========================
+   INPUTS / CAMPOS DE TEXTO
+========================= */
+
+input, textarea, select {
+    width: 100%;
+    background: var(--bg-glass);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    padding: 10px;
+    color: #fff;
+    outline: none;
 }
 
-/* FLEX UTILS */
-.flex {
-  display: flex;
-  gap: 16px;
+input::placeholder,
+textarea::placeholder {
+    color: var(--text-muted);
 }
 
-.flex-between {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* =========================
+   BARRA DE COMANDOS
+========================= */
+
+.command-bar {
+    background: #02040a;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px;
 }
 
-/* XP BAR */
-.xp-bar {
-  width: 100%;
-  height: 12px;
-  background: rgba(255,255,255,0.2);
-  border-radius: 8px;
-  overflow: hidden;
-}
+/* =========================
+   CLASSES (CORES)
+========================= */
 
-.xp-fill {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, var(--pink-hot), var(--yellow-hot));
-  transition: width 0.35s ease;
-}
+.class-minerador { color: #facc15; }
+.class-alcateia { color: #22c55e; }
+.class-piratas { color: #38bdf8; }
+.class-cupula { color: #a855f7; }
 
-/* CHAT */
-.chat-box {
-  height: 320px;
-  overflow-y: auto;
-  padding: 14px;
-  background: rgba(0,0,0,0.35);
-  border-radius: 10px;
-  margin-bottom: 12px;
-}
+/* =========================
+   OCULTAÇÃO / CONTROLE
+========================= */
 
-.chat-msg {
-  margin-bottom: 8px;
-  font-size: 0.9rem;
-  opacity: 0.9;
-}
-
-/* INPUT */
-input, select {
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  background: rgba(0,0,0,0.45);
-  color: #fff;
-  outline: none;
-}
-
-/* ADMIN OVERLAY */
-.admin-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.8);
-  backdrop-filter: blur(8px);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-.admin-panel {
-  width: 90%;
-  max-width: 500px;
-}
-
-/* 3D AREA */
-.artifact-3d {
-  width: 100%;
-  height: 360px;
-  background: #000;
-  border-radius: 14px;
-  overflow: hidden;
+.hidden {
+    display: none !important;
 }
