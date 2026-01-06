@@ -1,23 +1,27 @@
-const loginScreen = document.getElementById("loginScreen");
-const dashboard = document.getElementById("dashboard");
-const loginBtn = document.getElementById("loginBtn");
-const usernameInput = document.getElementById("username");
+const loginSection = document.getElementById("loginSection");
+const nicknameInput = document.getElementById("nickname");
 const classSelect = document.getElementById("classSelect");
 const passwordInput = document.getElementById("password");
-
-let currentUser = null;
+const loginBtn = document.getElementById("loginBtn");
 
 loginBtn.addEventListener("click", () => {
-  const username = usernameInput.value.trim();
-  const classe = classSelect.value;
+  const nickname = nicknameInput.value.trim();
+  const userClass = classSelect.value;
   const password = passwordInput.value;
 
-  if(username && password){
-    currentUser = {username, classe, level:1, coins:0, xp:0};
-    loginScreen.classList.add("hidden");
-    dashboard.classList.remove("hidden");
-    alert(`Bem-vindo ${username} da classe ${classe}!`);
-  } else {
-    alert("Preencha todos os campos!");
+  if (!nickname || !userClass || !password) return alert("Preencha todos os campos");
+
+  let user = db.users.find(u => u.nickname === nickname);
+  if (!user) {
+    // cadastro
+    user = { nickname, class: userClass, password, level: 1, xp: 0, coins: 0 };
+    db.users.push(user);
+    saveDB();
+  } else if (user.password !== password) {
+    return alert("Senha incorreta!");
   }
+
+  loginSection.classList.add("hidden");
+  window.currentUser = user;
+  updateStats();
 });
