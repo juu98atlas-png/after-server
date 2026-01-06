@@ -1,0 +1,256 @@
+/* =============================
+   AFTER.SERVER - style.css
+   Etapa 6 - Layout Futurista e Animações
+   ============================= */
+
+/* -----------------------------
+   Reset básico
+----------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Orbitron', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  color: #fff;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* -----------------------------
+   Containers principais
+----------------------------- */
+#login, #app, #adminPanel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
+  height: 100%;
+  width: 100%;
+}
+
+.hidden { display: none; }
+
+/* -----------------------------
+   Login
+----------------------------- */
+input, select, button {
+  margin: 5px 0;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+input, select {
+  width: 250px;
+}
+
+button {
+  background: linear-gradient(145deg, #00f0ff, #0077ff);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+}
+
+/* -----------------------------
+   App principal
+----------------------------- */
+#mainPanel {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* Perfil do usuário */
+#profilePanel {
+  background: rgba(20, 20, 50, 0.8);
+  padding: 15px;
+  border-radius: 15px;
+  width: 250px;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.6);
+}
+
+#xpBar {
+  background: #111;
+  width: 100%;
+  height: 15px;
+  border-radius: 8px;
+  margin-top: 5px;
+  overflow: hidden;
+}
+
+#xpFill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #00ffcc, #00aaff);
+  transition: width 0.5s ease-in-out;
+}
+
+/* Build RPG */
+.statContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.statContainer button {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  font-size: 1.1rem;
+}
+
+/* Chat futurista */
+#chatBox {
+  background: rgba(10,10,30,0.9);
+  padding: 10px;
+  border-radius: 15px;
+  width: 60%;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.7);
+}
+
+#chatMessages {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+#chatMessages p {
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+
+/* Artefatos */
+#artifactsGallery {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.artifactSlot {
+  background: rgba(20,20,50,0.8);
+  padding: 5px;
+  border-radius: 10px;
+  width: 120px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.6);
+  transition: transform 0.3s ease;
+}
+
+.artifactSlot:hover {
+  transform: scale(1.05) rotate(2deg);
+}
+
+.artifactSlot img {
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+}
+
+/* -----------------------------
+   Botões principais
+----------------------------- */
+#mineBtn {
+  background: linear-gradient(145deg, #ff7700, #ffbb00);
+  color: #fff;
+  padding: 10px 20px;
+  margin-top: 15px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+#mineBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+}
+
+/* -----------------------------
+   Admin Panel
+----------------------------- */
+#adminPanel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(30,30,60,0.95);
+  border-radius: 20px;
+  padding: 20px;
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1000;
+  width: 400px;
+  max-height: 80%;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+}
+
+#adminMembers {
+  list-style: none;
+  padding-left: 10px;
+}
+
+#adminMembers li {
+  margin: 5px 0;
+  padding: 5px;
+  background: rgba(0,255,255,0.1);
+  border-radius: 5px;
+}
+
+/* -----------------------------
+   Painel de Classes
+----------------------------- */
+#classStats {
+  list-style: none;
+  padding-left: 10px;
+  margin-top: 10px;
+}
+
+#classStats li {
+  margin: 3px 0;
+}
+
+/* -----------------------------
+   Ranking
+----------------------------- */
+#rankingList {
+  list-style: none;
+  padding-left: 10px;
+  margin-top: 10px;
+}
+
+#rankingList li {
+  margin: 3px 0;
+  background: rgba(255,255,255,0.05);
+  padding: 5px;
+  border-radius: 5px;
+}
+
+/* -----------------------------
+   Transições e hover geral
+----------------------------- */
+button, .artifactSlot, .statContainer span {
+  transition: all 0.3s ease;
+}
