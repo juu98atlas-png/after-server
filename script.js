@@ -1,9 +1,9 @@
-// Menu toggle
+// Menu toggle horizontal
 const menuBtn = document.getElementById("menuBtn");
-const sideMenu = document.getElementById("sideMenu");
+const topMenu = document.getElementById("topMenu");
 
 menuBtn.addEventListener("click", () => {
-  sideMenu.classList.toggle("open");
+  topMenu.classList.toggle("open");
 });
 
 // Mineração
@@ -44,9 +44,9 @@ const sendBtn = document.getElementById("sendBtn");
 sendBtn.addEventListener("click", () => {
   const msg = chatInput.value.trim();
   if (!msg) return;
-  const username = "Player1"; // futuramente pegar do login
+  const username = "Player1";
   const levelDisplay = level;
-  const classDisplay = "Minerador"; // futuramente pegar do login
+  const classDisplay = "Minerador";
 
   const message = `${username} [${classDisplay} Lv${levelDisplay}]: ${msg}`;
   const msgEl = document.createElement("div");
