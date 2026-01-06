@@ -29,3 +29,16 @@ mineBtn.addEventListener("click", () => {
   xpFill.style.width = percent + "%";
   xpText.textContent = `${xp} / ${xpNeeded} XP`;
 });
+// ===== SISTEMA DE ARTEFATOS =====
+
+const activeArtifact = {
+  id: "artifact_001",
+  name: "Núcleo Solar",
+  rarity: "Épico",
+  xpBonus: 0.15,   // +15% XP
+  coinBonus: 0.10 // +10% chance de coin
+};
+
+function applyArtifactBonus(baseXP) {
+  return Math.floor(baseXP * (1 + activeArtifact.xpBonus));
+}
