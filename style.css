@@ -39,42 +39,42 @@ body {
   font-size: 0.9rem;
 }
 
-/* MAIN WRAPPER */
-.main-wrapper {
-  display: flex;
-  height: calc(100vh - 64px);
-}
-
-/* MENU LATERAL */
-.side-menu {
-  width: 0;
+/* MENU HORIZONTAL */
+.top-menu {
+  height: 0;
   overflow: hidden;
   background: rgba(0,0,0,0.6);
-  transition: width 0.3s ease;
+  transition: height 0.3s ease;
 }
 
-.side-menu ul {
+.top-menu ul {
+  display: flex;
   list-style: none;
-  padding: 20px;
+  padding: 10px 20px;
+  justify-content: space-around;
 }
 
-.side-menu li {
-  padding: 12px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.2);
+.top-menu li {
+  padding: 12px 20px;
+  border-radius: 8px;
   cursor: pointer;
+  transition: background 0.2s;
 }
 
-.side-menu.open {
-  width: 200px;
+.top-menu li:hover {
+  background: rgba(255,255,255,0.2);
 }
 
-/* CONTEÚDO PRINCIPAL */
+.top-menu.open {
+  height: 60px;
+}
+
+/* MAIN CONTAINER */
 .container {
   display: grid;
   grid-template-columns: 1fr;
   gap: 20px;
   padding: 20px;
-  flex: 1;
 }
 
 @media (min-width: 768px) {
