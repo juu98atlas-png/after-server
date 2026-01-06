@@ -1,4 +1,3 @@
-// Mineração
 const mineBtn = document.getElementById("mineBtn");
 const xpFill = document.getElementById("xpFill");
 const xpText = document.getElementById("xpText");
@@ -31,31 +30,10 @@ mineBtn.addEventListener("click", () => {
   xpText.textContent = `${xp} / ${xpNeeded} XP`;
 });
 
-// Chat
-const chatInput = document.getElementById("chatInput");
-const chatMessages = document.getElementById("chatMessages");
-const sendBtn = document.getElementById("sendBtn");
+// TOGGLE DO MENU
+const menuBtn = document.getElementById("menuBtn");
+const sidebar = document.getElementById("sidebar");
 
-// Usuário atual (exemplo)
-const currentUser = {
-  name: "Usuário",
-  classe: "Minerador",
-  level: 1
-};
-
-function sendMessage() {
-  const msg = chatInput.value.trim();
-  if (!msg) return;
-
-  const p = document.createElement("p");
-  p.textContent = `${currentUser.name} [${currentUser.classe} Lv${currentUser.level}]: ${msg}`;
-  chatMessages.appendChild(p);
-
-  chatMessages.scrollTop = chatMessages.scrollHeight; // auto-scroll
-  chatInput.value = "";
-}
-
-sendBtn.addEventListener("click", sendMessage);
-chatInput.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") sendMessage();
+menuBtn.addEventListener("click", () => {
+  sidebar.classList.toggle("active");
 });
