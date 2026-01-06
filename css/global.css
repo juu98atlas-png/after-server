@@ -1,130 +1,210 @@
-/* =========================
-   RESET E BASE GLOBAL
-========================= */
-
+/* RESET */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Orbitron', sans-serif;
 }
 
-html, body {
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at top, #0a0f1f, #05070d);
-    color: #e6e6e6;
-    overflow: hidden;
+/* FUNDO */
+body {
+  background: radial-gradient(circle at top, #0a0f1f, #05060a);
+  color: #e0e0ff;
+  min-height: 100vh;
 }
 
-/* =========================
-   VARIÁVEIS DO SISTEMA
-========================= */
-
-:root {
-    --neon-blue: #00f0ff;
-    --neon-purple: #8b5cf6;
-    --neon-green: #00ff9c;
-    --danger-red: #ff4d4d;
-
-    --bg-panel: rgba(15, 20, 40, 0.85);
-    --bg-glass: rgba(255, 255, 255, 0.05);
-
-    --border-glow: 0 0 12px rgba(0, 240, 255, 0.35);
-    --text-muted: #9aa4bf;
+/* TELAS */
+.screen {
+  display: none;
+  padding: 20px;
 }
 
-/* =========================
-   ESTRUTURA PRINCIPAL
-========================= */
-
-#app {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+.screen.active {
+  display: block;
 }
 
-/* =========================
-   PAINÉIS (GLASS + PROFUNDIDADE)
-========================= */
-
-.panel {
-    background: var(--bg-panel);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 14px;
-    box-shadow: var(--border-glow);
-    padding: 16px;
+/* LOGIN */
+#auth-screen {
+  max-width: 400px;
+  margin: 100px auto;
+  background: rgba(20, 25, 50, 0.85);
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 0 40px rgba(80,120,255,0.4);
+  text-align: center;
 }
 
-/* =========================
-   BOTÕES (3D + FUTURISTA)
-========================= */
-
-button {
-    background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-    border: none;
-    border-radius: 10px;
-    padding: 10px 16px;
-    color: #000;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.4);
-    transition: all 0.15s ease;
+#auth-screen h1 {
+  margin-bottom: 20px;
+  color: #7aa2ff;
 }
 
-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 18px rgba(0, 240, 255, 0.4);
+#auth-screen input,
+#auth-screen select {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background: #0e1530;
+  color: #fff;
 }
 
-button:active {
-    transform: translateY(2px);
-    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.6);
+#auth-screen button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #4f7cff, #7f5bff);
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(80,120,255,0.6);
 }
 
-/* =========================
-   INPUTS / CAMPOS DE TEXTO
-========================= */
-
-input, textarea, select {
-    width: 100%;
-    background: var(--bg-glass);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 8px;
-    padding: 10px;
-    color: #fff;
-    outline: none;
+/* HEADER */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-input::placeholder,
-textarea::placeholder {
-    color: var(--text-muted);
+#user-info span {
+  margin-right: 10px;
+  font-size: 14px;
 }
 
-/* =========================
-   BARRA DE COMANDOS
-========================= */
-
-.command-bar {
-    background: #02040a;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 10px;
+#command-bar {
+  background: #0e1530;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  color: #fff;
 }
 
-/* =========================
-   CLASSES (CORES)
-========================= */
+/* PAINEL DE CLASSES */
+#class-panel {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
 
-.class-minerador { color: #facc15; }
-.class-alcateia { color: #22c55e; }
-.class-piratas { color: #38bdf8; }
-.class-cupula { color: #a855f7; }
+.class-box {
+  background: rgba(30,40,90,0.6);
+  padding: 12px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: inset 0 0 15px rgba(100,120,255,0.2);
+}
 
-/* =========================
-   OCULTAÇÃO / CONTROLE
-========================= */
+/* ARTEFATO */
+#artifact-section {
+  background: rgba(15,20,45,0.9);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 30px rgba(120,160,255,0.25);
+}
+
+#artifact-canvas {
+  width: 100%;
+  height: 280px;
+  background: #000;
+  border-radius: 12px;
+  margin: 15px 0;
+}
+
+.artifact-info p {
+  margin-bottom: 8px;
+}
+
+.artifact-info button {
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ffb347, #ffcc33);
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* MINERAÇÃO */
+#mining-section {
+  background: rgba(15,20,45,0.9);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+#mine-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #2af598, #009efd);
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.bar {
+  width: 100%;
+  height: 14px;
+  background: #111;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#xp-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #00f2fe, #4facfe);
+}
+
+/* CHAT */
+#chat-section {
+  background: rgba(15,20,45,0.9);
+  border-radius: 16px;
+  padding: 15px;
+}
+
+#chat-messages {
+  height: 200px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  background: #0b1025;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.chat-input {
+  display: flex;
+  gap: 10px;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: #0e1530;
+  color: #fff;
+}
+
+.chat-input button {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, #7f5bff, #4f7cff);
+  color: #fff;
+}
+
+/* ADMIN */
+#admin-panel {
+  background: #050814;
+}
 
 .hidden {
-    display: none !important;
+  display: none;
 }
