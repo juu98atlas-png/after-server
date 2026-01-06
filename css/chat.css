@@ -5,13 +5,17 @@
 
 #chatBox {
   height: 200px;
-  background: rgba(0,0,0,0.3);
-  border-radius: 12px;
   overflow-y: auto;
+  background: rgba(0,0,0,0.4);
+  border-radius: 12px;
   padding: 10px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
-#chatBox p {
-  margin-bottom: 6px;
+#chatInput {
+  width: calc(100% - 24px);
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: none;
 }
