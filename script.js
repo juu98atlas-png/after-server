@@ -10,8 +10,9 @@ let coins = 0;
 let xpNeeded = 100;
 
 mineBtn.addEventListener("click", () => {
-  const gain = Math.floor(Math.random() * 12) + 6;
-  xp += gain;
+  const baseGain = Math.floor(Math.random() * 15) + 5;
+const gain = applyArtifactBonus(baseGain);
+xp += gain;
 
   if (Math.random() < 0.35) {
     coins++;
