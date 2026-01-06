@@ -1,21 +1,21 @@
-const chatInput = document.getElementById("chatInput");
 const chatBox = document.getElementById("chatBox");
-const sendChatBtn = document.getElementById("sendChatBtn");
+const chatInput = document.getElementById("chatInput");
+const sendBtn = document.getElementById("sendBtn");
 
-sendChatBtn.addEventListener("click", sendChat);
-chatInput.addEventListener("keypress", e => {
-  if(e.key === "Enter") sendChat();
+sendBtn.addEventListener("click", () => {
+  sendMessage();
 });
 
-function sendChat() {
-  if(!currentUser) return alert("Entre primeiro!");
+chatInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") sendMessage();
+});
+
+function sendMessage() {
   const msg = chatInput.value.trim();
-  if(!msg) return;
-
-  const p = document.createElement("p");
-  p.textContent = `[${currentUser.nickname} | ${currentUser.className} | Lvl ${currentUser.level}]: ${msg}`;
-  chatBox.appendChild(p);
-  chatBox.scrollTop = chatBox.scrollHeight;
-
+  if (!msg) return;
+  const div = document.createElement("div");
+  div.textContent = `${currentUser.nickname} [${currentUser.class}] Lvl:${currentUser.level}: ${msg}`;
+  chatBox.appendChild(div);
   chatInput.value = "";
+  chatBox.scrollTop = chatBox.scrollHeight;
 }
