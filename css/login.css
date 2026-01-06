@@ -1,19 +1,23 @@
-#loginScreen {
+#loginSection {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0,0,0,0.85);
+  padding: 30px;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
   gap: 12px;
+  z-index: 100;
 }
 
-#loginScreen input, #loginScreen select {
+#loginSection input, #loginSection select {
   padding: 10px;
   border-radius: 8px;
   border: none;
-  width: 200px;
 }
 
-#loginScreen button {
-  width: 220px;
+#loginSection button {
+  margin-top: 10px;
 }
