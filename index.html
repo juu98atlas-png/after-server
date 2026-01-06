@@ -5,14 +5,13 @@
   <title>AFTER.SERVER</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Fonte futurista -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
 
   <!-- Model Viewer (3D profissional) -->
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
-  <!-- CSS -->
   <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/login.css">
   <link rel="stylesheet" href="css/dashboard.css">
   <link rel="stylesheet" href="css/chat.css">
@@ -21,10 +20,11 @@
 <body>
 
   <!-- LOGIN -->
-  <section id="loginScreen">
-    <h2>AFTER.SERVER LOGIN</h2>
-    <input type="text" id="username" placeholder="Apelido">
+  <section id="loginSection" class="modal">
+    <h2>Login / Cadastro</h2>
+    <input type="text" id="nickname" placeholder="Apelido">
     <select id="classSelect">
+      <option value="">Selecione a Classe</option>
       <option value="Minerador">Minerador</option>
       <option value="Alcateia">Alcateia</option>
       <option value="Piratas">Piratas</option>
@@ -34,64 +34,73 @@
     <button id="loginBtn">Entrar</button>
   </section>
 
-  <!-- DASHBOARD -->
-  <main id="dashboard" class="hidden">
+  <!-- PAINEL PRINCIPAL -->
+  <header class="topbar">
+    <h1>AFTER.SERVER</h1>
+    <div class="stats">
+      <span>Lvl <b id="level">1</b></span>
+      <span>Coins <b id="coins">0</b></span>
+    </div>
+  </header>
 
-    <header class="topbar">
-      <h1>AFTER.SERVER</h1>
-      <div class="stats">
-        <span>Lvl <b id="level">1</b></span>
-        <span>Coins <b id="coins">0</b></span>
-      </div>
-    </header>
+  <main class="container">
 
-    <section class="container">
+    <!-- COLUNA ESQUERDA: MINERAÇÃO -->
+    <section class="panel">
+      <h2>Mineração</h2>
 
-      <!-- MINERAÇÃO -->
-      <div class="panel">
-        <h2>Mineração</h2>
-        <div class="xp-wrapper">
-          <div class="xp-bar">
-            <div id="xpFill"></div>
-          </div>
-          <span id="xpText">0 / 100 XP</span>
+      <div class="xp-wrapper">
+        <div class="xp-bar">
+          <div id="xpFill"></div>
         </div>
-        <button id="mineBtn">⛏ Minerar</button>
+        <span id="xpText">0 / 100 XP</span>
       </div>
 
-      <!-- ARTEFATO 3D -->
-      <div class="panel">
-        <h2>Artefato Ativo</h2>
-        <model-viewer
-          src="assets/artifacts/artifact.glb"
-          alt="Artefato 3D"
-          auto-rotate
-          camera-controls
-          environment-image="neutral"
-          exposure="1.2"
-          shadow-intensity="1"
-          style="width:100%; height:320px;">
-        </model-viewer>
-        <button id="buyArtifact">🛒 Comprar</button>
-        <p class="hint">Artefato renderizado localmente</p>
-      </div>
+      <div class="mined-items" id="minedItems"></div>
 
-      <!-- CHAT -->
-      <div class="panel">
-        <h2>Chat Global</h2>
-        <div id="chatBox" class="chat-box"></div>
-        <input type="text" id="chatInput" placeholder="Digite sua mensagem...">
-        <button id="sendBtn">Enviar</button>
-      </div>
+      <button id="mineBtn">⛏ Minerar</button>
+    </section>
 
+    <!-- COLUNA DIREITA: ARTEFATO -->
+    <section class="panel">
+      <h2>Artefato Ativo</h2>
+
+      <model-viewer
+        id="artifact3D"
+        src="assets/artifacts/artifact.glb"
+        alt="Artefato 3D"
+        auto-rotate
+        camera-controls
+        environment-image="neutral"
+        exposure="1.2"
+        shadow-intensity="1"
+        style="width: 100%; height: 320px;">
+      </model-viewer>
+
+      <div id="artifactInfo" class="artifact-info">
+        <h3>Nome: Lâmina Solar</h3>
+        <p>Raridade: 🔶 Rara</p>
+        <p>Buffs: +5 Mineração, +3 Sorte</p>
+        <p>Requisito: Nível 2</p>
+        <button onclick="window.open('https://jlfactoryswoadlyers.blogspot.com','_blank')">Comprar</button>
+      </div>
+    </section>
+
+    <!-- CHAT GLOBAL -->
+    <section class="panel chatPanel">
+      <h2>Chat Global</h2>
+      <div id="chatMessages" class="chatMessages"></div>
+      <input type="text" id="chatInput" placeholder="Digite sua mensagem...">
+      <button id="sendBtn">Enviar</button>
     </section>
 
   </main>
 
-  <!-- JS -->
+  <script src="js/database.js"></script>
   <script src="js/auth.js"></script>
-  <script src="js/profile.js"></script>
   <script src="js/mining.js"></script>
+  <script src="js/artifacts.js"></script>
   <script src="js/chat.js"></script>
+  <script src="js/admin.js"></script>
 </body>
 </html>
