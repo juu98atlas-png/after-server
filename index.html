@@ -8,93 +8,67 @@
   <!-- Fonte futurista -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
 
-  <!-- Model Viewer (3D) -->
+  <!-- Model Viewer (3D profissional) -->
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="css/global.css">
-  <link rel="stylesheet" href="css/login.css">
-  <link rel="stylesheet" href="css/dashboard.css">
-  <link rel="stylesheet" href="css/chat.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+  <!-- MENU LATERAL -->
+  <aside class="sidebar">
+    <h2>AFTER.SERVER</h2>
+    <nav>
+      <ul>
+        <li><span>🏠</span> Perfil</li>
+        <li><span>🛒</span> Loja</li>
+        <li><span>🔬</span> Laboratório</li>
+      </ul>
+    </nav>
+  </aside>
 
-  <!-- LOGIN / CADASTRO -->
-  <div id="loginSection" class="modal">
-    <h2>Entrar / Cadastro</h2>
-    <input type="text" id="nickname" placeholder="Apelido">
-    <select id="classSelect">
-      <option value="">Selecione a classe</option>
-      <option value="Minerador">Minerador</option>
-      <option value="Alcateia">Alcateia</option>
-      <option value="Piratas">Piratas</option>
-      <option value="Cúpula">Cúpula</option>
-    </select>
-    <input type="password" id="password" placeholder="Senha">
-    <button id="loginBtn">Entrar</button>
+  <!-- CONTEÚDO PRINCIPAL -->
+  <div class="main-content">
+    <header class="topbar">
+      <div class="stats">
+        <span>Lvl <b id="level">1</b></span>
+        <span>Coins <b id="coins">0</b></span>
+      </div>
+    </header>
+
+    <main class="container">
+
+      <!-- COLUNA ESQUERDA -->
+      <section class="panel">
+        <h2>Mineração</h2>
+        <div class="xp-wrapper">
+          <div class="xp-bar">
+            <div id="xpFill"></div>
+          </div>
+          <span id="xpText">0 / 100 XP</span>
+        </div>
+        <button id="mineBtn">⛏ Minerar</button>
+      </section>
+
+      <!-- COLUNA DIREITA -->
+      <section class="panel">
+        <h2>Artefato Ativo</h2>
+        <model-viewer
+          src="artifact.glb"
+          alt="Artefato 3D"
+          auto-rotate
+          camera-controls
+          environment-image="neutral"
+          exposure="1.2"
+          shadow-intensity="1"
+          style="width: 100%; height: 320px;">
+        </model-viewer>
+        <p class="hint">Artefato renderizado localmente</p>
+      </section>
+
+    </main>
   </div>
 
-  <!-- TOPO -->
-  <header class="topbar">
-    <h1>AFTER.SERVER</h1>
-    <div class="stats">
-      <span>Lvl <b id="level">1</b></span>
-      <span>Coins <b id="coins">0</b></span>
-    </div>
-  </header>
-
-  <!-- CONTAINER PRINCIPAL -->
-  <main class="container">
-
-    <!-- COLUNA ESQUERDA -->
-    <section class="panel">
-      <h2>Mineração</h2>
-
-      <div class="xp-wrapper">
-        <div class="xp-bar">
-          <div id="xpFill"></div>
-        </div>
-        <span id="xpText">0 / 100 XP</span>
-      </div>
-
-      <button id="mineBtn">⛏ Minerar</button>
-    </section>
-
-    <!-- COLUNA DIREITA -->
-    <section class="panel">
-      <h2>Artefato Ativo</h2>
-
-      <model-viewer
-      <model-viewer
-    src="artifact.glb"
-    alt="Artefato 3D"
-    auto-rotate
-    camera-controls
-    environment-image="neutral"
-    exposure="1.2"
-    shadow-intensity="1"
-    style="width: 100%; height: 320px;">
-</model-viewer>
-
-      <p class="hint" id="artifactHint">Artefato renderizado localmente</p>
-    </section>
-
-    <!-- CHAT -->
-    <section class="panel" id="chatPanel">
-      <h2>Chat Global</h2>
-      <div id="chatBox"></div>
-      <input type="text" id="chatInput" placeholder="Digite sua mensagem">
-      <button id="sendChatBtn">Enviar</button>
-    </section>
-
-  </main>
-
-  <!-- SCRIPTS -->
-  <script src="js/database.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/mining.js"></script>
-  <script src="js/chat.js"></script>
-  <script src="js/admin.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
