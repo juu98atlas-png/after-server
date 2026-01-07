@@ -1,33 +1,45 @@
-let user = JSON.parse(localStorage.getItem("after_user"));
-
 const mineBtn = document.getElementById("mineBtn");
 const xpFill = document.getElementById("xpFill");
 const xpText = document.getElementById("xpText");
 const levelEl = document.getElementById("level");
 const coinsEl = document.getElementById("coins");
 
-levelEl.textContent = user.level;
-coinsEl.textContent = user.coins;
+let user = JSON.parse(localStorage.getItem("after_user"));
 
-mineBtn.onclick = () => {
-  const gain = Math.floor(Math.random() * 12) + 6;
-  user.xp += gain;
+if (user) {
+  let xp = user.xp || 0;
+  let level = user.level || 1;
+  let coins = user.coins || 0;
+  let xpNeeded = 100 + level * 25;
 
-  if (Math.random() < 0.35) {
-    user.coins++;
+  function updateUI() {
+    levelEl.textContent = level;
+    coinsEl.textContent = coins;
+    xpFill.style.width = Math.min((xp / xpNeeded) * 100, 100) + "%";
+    xpText.textContent = `${xp} / ${xpNeeded} XP`;
   }
 
-  if (user.xp >= user.xpNeeded) {
-    user.xp -= user.xpNeeded;
-    user.level++;
-    user.xpNeeded = Math.floor(user.xpNeeded * 1.35);
-  }
+  updateUI();
 
-  localStorage.setItem("after_user", JSON.stringify(user));
+  mineBtn.addEventListener("click", () => {
+    const gain = Math.floor(Math.random() * 12) + 6;
+    xp += gain;
 
-  levelEl.textContent = user.level;
-  coinsEl.textContent = user.coins;
+    if (Math.random() < 0.35) {
+      coins++;
+    }
 
-  xpFill.style.width = `${(user.xp / user.xpNeeded) * 100}%`;
-  xpText.textContent = `${user.xp} / ${user.xpNeeded} XP`;
-};
+    if (xp >= xpNeeded) {
+      xp -= xpNeeded;
+      level++;
+      xpNeeded = 100 + level * 25;
+    }
+
+    user.xp = xp;
+    user.level = level;
+    user.coins = coins;
+
+    localStorage.setItem("after_user", JSON.stringify(user));
+    updateUI();
+  });
+}
