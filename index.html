@@ -7,6 +7,7 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
   <link rel="stylesheet" href="css/global.css">
   <link rel="stylesheet" href="css/login.css">
   <link rel="stylesheet" href="css/dashboard.css">
@@ -15,19 +16,24 @@
 
 <body>
 
-  <!-- LOGIN / CADASTRO -->
+  <!-- LOGIN -->
   <div id="authPanel">
     <h2>Entrar / Cadastrar</h2>
+
     <input type="text" id="nicknameInput" placeholder="Apelido">
+
     <select id="classSelect">
       <option value="Minerador">Minerador</option>
       <option value="Alcateia">Alcateia</option>
       <option value="Piratas">Piratas</option>
       <option value="Cúpula">Cúpula</option>
     </select>
+
     <input type="password" id="passwordInput" placeholder="Senha">
+
     <button id="loginBtn">Entrar</button>
     <button id="registerBtn">Cadastrar</button>
+
     <p id="authMessage"></p>
   </div>
 
@@ -35,7 +41,7 @@
   <div id="dashboard" style="display:none;">
 
     <header class="topbar">
-      <button id="menuBtn">☰ Menu</button>
+      <button id="menuBtn">☰</button>
       <h1>AFTER.SERVER</h1>
       <div class="stats">
         <span>Lvl <b id="level">1</b></span>
@@ -52,22 +58,27 @@
     </nav>
 
     <main class="container">
-      <!-- Mineração -->
+
+      <!-- MINERAÇÃO -->
       <section class="panel">
         <h2>Mineração</h2>
+
         <div class="xp-wrapper">
-          <div class="xp-bar"><div id="xpFill"></div></div>
+          <div class="xp-bar">
+            <div id="xpFill"></div>
+          </div>
           <span id="xpText">0 / 100 XP</span>
         </div>
+
         <button id="mineBtn">⛏ Minerar</button>
       </section>
 
-      <!-- Artefato -->
+      <!-- ARTEFATO -->
       <section class="panel">
         <h2>Artefato Ativo</h2>
+
         <model-viewer
           src="artifact.glb"
-          alt="Artefato 3D"
           auto-rotate
           camera-controls
           environment-image="neutral"
@@ -75,23 +86,27 @@
           shadow-intensity="1"
           style="width:100%;height:320px;">
         </model-viewer>
-        <p class="hint">Artefato renderizado localmente</p>
+
+        <p class="hint">Raridade: Épico • +XP • +Drop</p>
       </section>
 
-      <!-- Chat -->
-      <section class="panel" id="chatPanel">
+      <!-- CHAT -->
+      <section class="panel">
         <h2>Chat Global</h2>
+
         <div id="chatBox" class="chat-box"></div>
-        <input type="text" id="chatInput" placeholder="Digite sua mensagem...">
+
+        <input id="chatInput" type="text" placeholder="Digite sua mensagem...">
         <button id="sendBtn">Enviar</button>
       </section>
-    </main>
 
+    </main>
   </div>
 
   <script src="js/auth.js"></script>
-  <script src="js/mining.js"></script>
   <script src="js/menu.js"></script>
+  <script src="js/mining.js"></script>
   <script src="js/chat.js"></script>
+
 </body>
 </html>
