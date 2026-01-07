@@ -4,6 +4,10 @@ const loginBtn = document.getElementById("loginBtn");
 const registerBtn = document.getElementById("registerBtn");
 const authMessage = document.getElementById("authMessage");
 
+const authBox = document.querySelector(".auth-box");
+const dashboard = document.getElementById("dashboard");
+const logoutBtn = document.getElementById("logoutBtn");
+
 // LOGIN
 loginBtn.addEventListener("click", () => {
   const email = emailInput.value;
@@ -11,7 +15,8 @@ loginBtn.addEventListener("click", () => {
 
   auth.signInWithEmailAndPassword(email, password)
     .then(() => {
-      authMessage.innerText = "Login realizado com sucesso!";
+      authBox.style.display = "none";
+      dashboard.style.display = "block";
     })
     .catch(error => {
       authMessage.innerText = error.message;
@@ -25,9 +30,17 @@ registerBtn.addEventListener("click", () => {
 
   auth.createUserWithEmailAndPassword(email, password)
     .then(() => {
-      authMessage.innerText = "Conta criada com sucesso!";
+      authMessage.innerText = "Conta criada! Agora faça login.";
     })
     .catch(error => {
       authMessage.innerText = error.message;
     });
+});
+
+// LOGOUT
+logoutBtn.addEventListener("click", () => {
+  auth.signOut().then(() => {
+    dashboard.style.display = "none";
+    authBox.style.display = "block";
+  });
 });
