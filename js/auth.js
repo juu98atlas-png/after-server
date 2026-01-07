@@ -1,8 +1,6 @@
 // auth.js
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { app } from "./firebase.js"; // importa sua configuração do Firebase
-
-const auth = getAuth(app);
+import { auth } from "./firebase.js";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
 
 // Elementos do DOM
 const authPanel = document.getElementById("authPanel");
@@ -79,7 +77,7 @@ logoutBtn.addEventListener("click", () => {
 });
 
 // Mantém usuário logado se a página for recarregada
-auth.onAuthStateChanged((user) => {
+onAuthStateChanged(auth, (user) => {
   if (user) {
     authPanel.style.display = "none";
     dashboard.style.display = "block";
