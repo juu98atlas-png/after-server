@@ -2,20 +2,16 @@ const chatBox = document.getElementById("chatBox");
 const chatInput = document.getElementById("chatInput");
 const sendBtn = document.getElementById("sendBtn");
 
-sendBtn.addEventListener("click", () => {
-  sendMessage();
-});
+const user = JSON.parse(localStorage.getItem("after_user"));
 
-chatInput.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") sendMessage();
-});
-
-function sendMessage() {
+sendBtn.onclick = () => {
   const msg = chatInput.value.trim();
   if (!msg) return;
-  const div = document.createElement("div");
-  div.textContent = `${currentUser.nickname} [${currentUser.class}] Lvl:${currentUser.level}: ${msg}`;
-  chatBox.appendChild(div);
-  chatInput.value = "";
+
+  const el = document.createElement("div");
+  el.textContent = `${user.nickname} [${user.class} Lv${user.level}]: ${msg}`;
+
+  chatBox.appendChild(el);
   chatBox.scrollTop = chatBox.scrollHeight;
-}
+  chatInput.value = "";
+};
