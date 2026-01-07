@@ -1,56 +1,59 @@
-const auth = window.auth;
-const db = window.db;
+// auth.js
+import { auth } from "./firebase.js";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
 const loginBtn = document.getElementById("loginBtn");
 const registerBtn = document.getElementById("registerBtn");
-const message = document.getElementById("authMessage");
+const logoutBtn = document.getElementById("logoutBtn");
+const statusText = document.getElementById("status");
 
-const authPanel = document.getElementById("authPanel");
-const dashboard = document.getElementById("dashboard");
-
-loginBtn.onclick = async () => {
-  const nick = nicknameInput.value.trim();
-  const pass = passwordInput.value;
-
-  if (!nick || !pass) {
-    message.textContent = "Preencha todos os campos";
-    return;
-  }
-
+// REGISTRAR
+registerBtn.addEventListener("click", async () => {
   try {
-    await auth.signInWithEmailAndPassword(`${nick}@after.app`, pass);
-    authPanel.style.display = "none";
-    dashboard.style.display = "block";
-  } catch (err) {
-    message.textContent = err.message;
-  }
-};
-
-registerBtn.onclick = async () => {
-  const nick = nicknameInput.value.trim();
-  const pass = passwordInput.value;
-  const classe = classSelect.value;
-
-  if (!nick || !pass) {
-    message.textContent = "Campos vazios";
-    return;
-  }
-
-  try {
-    const userCred = await auth.createUserWithEmailAndPassword(
-      `${nick}@after.app`,
-      pass
+    await createUserWithEmailAndPassword(
+      auth,
+      emailInput.value,
+      passwordInput.value
     );
-
-    await db.collection("users").doc(userCred.user.uid).set({
-      nickname: nick,
-      classe,
-      level: 1,
-      coins: 0
-    });
-
-    message.textContent = "Conta criada com sucesso!";
-  } catch (err) {
-    message.textContent = err.message;
+    statusText.innerText = "Conta criada com sucesso!";
+  } catch (error) {
+    statusText.innerText = error.message;
   }
-};
+});
+
+// LOGIN
+loginBtn.addEventListener("click", async () => {
+  try {
+    await signInWithEmailAndPassword(
+      auth,
+      emailInput.value,
+      passwordInput.value
+    );
+    statusText.innerText = "Login realizado!";
+  } catch (error) {
+    statusText.innerText = error.message;
+  }
+});
+
+// LOGOUT
+logoutBtn.addEventListener("click", async () => {
+  await signOut(auth);
+});
+
+// OBSERVADOR DE LOGIN
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    statusText.innerText = `Logado como ${user.email}`;
+    logoutBtn.style.display = "block";
+  } else {
+    statusText.innerText = "Não logado";
+    logoutBtn.style.display = "none";
+  }
+});
