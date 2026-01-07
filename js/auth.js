@@ -1,44 +1,41 @@
-// auth.js
-import { auth } from "./firebase.js";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
+import { auth, db } from "./firebase.js";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-auth.js";
+import { ref, set } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-database.js";
 
-// Elementos do DOM
 const authPanel = document.getElementById("authPanel");
 const dashboard = document.getElementById("dashboard");
-
-const emailInput = document.getElementById("emailInput");
-const passwordInput = document.getElementById("passwordInput");
-
 const loginBtn = document.getElementById("loginBtn");
 const registerBtn = document.getElementById("registerBtn");
 const logoutBtn = document.getElementById("logoutBtn");
-
+const emailInput = document.getElementById("emailInput");
+const passwordInput = document.getElementById("passwordInput");
 const authMessage = document.getElementById("authMessage");
-
-// Função para exibir mensagens
-function showMessage(msg, success = true) {
-  authMessage.textContent = msg;
-  authMessage.style.color = success ? "lime" : "red";
-}
 
 // CADASTRO
 registerBtn.addEventListener("click", () => {
   const email = emailInput.value.trim();
   const password = passwordInput.value.trim();
-
   if (!email || !password) {
-    showMessage("Preencha email e senha.", false);
+    authMessage.textContent = "Preencha todos os campos!";
     return;
   }
 
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      showMessage("Conta criada com sucesso!");
-      emailInput.value = "";
-      passwordInput.value = "";
+      const user = userCredential.user;
+      // Cria dados iniciais no Database
+      set(ref(db, 'users/' + user.uid), {
+        email: user.email,
+        level: 1,
+        coins: 0,
+        xp: 0
+      });
+      authMessage.textContent = "Cadastro realizado com sucesso!";
+      authPanel.style.display = "none";
+      dashboard.style.display = "block";
     })
     .catch((error) => {
-      showMessage(error.message, false);
+      authMessage.textContent = error.message;
     });
 });
 
@@ -46,20 +43,19 @@ registerBtn.addEventListener("click", () => {
 loginBtn.addEventListener("click", () => {
   const email = emailInput.value.trim();
   const password = passwordInput.value.trim();
-
   if (!email || !password) {
-    showMessage("Preencha email e senha.", false);
+    authMessage.textContent = "Preencha todos os campos!";
     return;
   }
 
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      showMessage("Login efetuado com sucesso!");
+      authMessage.textContent = "Login efetuado com sucesso!";
       authPanel.style.display = "none";
       dashboard.style.display = "block";
     })
     .catch((error) => {
-      showMessage(error.message, false);
+      authMessage.textContent = error.message;
     });
 });
 
@@ -67,23 +63,10 @@ loginBtn.addEventListener("click", () => {
 logoutBtn.addEventListener("click", () => {
   signOut(auth)
     .then(() => {
-      showMessage("Logout efetuado!");
       dashboard.style.display = "none";
       authPanel.style.display = "block";
-    })
-    .catch((error) => {
-      showMessage(error.message, false);
+      authMessage.textContent = "";
+      emailInput.value = "";
+      passwordInput.value = "";
     });
-});
-
-// Mantém usuário logado se a página for recarregada
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    authPanel.style.display = "none";
-    dashboard.style.display = "block";
-    showMessage(`Bem-vindo ${user.email}!`);
-  } else {
-    authPanel.style.display = "block";
-    dashboard.style.display = "none";
-  }
 });
