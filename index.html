@@ -1,9 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>AFTER.SERVER</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/login.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/chat.css">
+</head>
+
+<body>
+
 <!-- LOGIN -->
-<div id="authPanel" class="auth-panel">
-  <h2>AFTER.SERVER</h2>
+<div id="authPanel">
+  <h2>Entrar / Cadastrar</h2>
 
-  <input type="text" id="nicknameInput" placeholder="Apelido" />
-
+  <input id="nicknameInput" type="text" placeholder="Apelido">
   <select id="classSelect">
     <option value="Minerador">Minerador</option>
     <option value="Alcateia">Alcateia</option>
@@ -11,11 +28,62 @@
     <option value="Cúpula">Cúpula</option>
   </select>
 
-  <input type="email" id="emailInput" placeholder="Email" />
-  <input type="password" id="passwordInput" placeholder="Senha" />
+  <input id="passwordInput" type="password" placeholder="Senha">
 
   <button id="loginBtn">Entrar</button>
   <button id="registerBtn">Cadastrar</button>
 
   <p id="authMessage"></p>
 </div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" style="display:none;">
+  <header class="topbar">
+    <button id="menuBtn">☰</button>
+    <h1>AFTER.SERVER</h1>
+    <div class="stats">
+      <span>Lvl <b id="level">1</b></span>
+      <span>Coins <b id="coins">0</b></span>
+    </div>
+  </header>
+
+  <nav id="topMenu" class="top-menu">
+    <ul>
+      <li>Perfil</li>
+      <li>Loja</li>
+      <li>Laboratório</li>
+    </ul>
+  </nav>
+
+  <main class="container">
+
+    <section class="panel">
+      <h2>Mineração</h2>
+      <button id="mineBtn">⛏ Minerar</button>
+    </section>
+
+    <section class="panel">
+      <h2>Artefato</h2>
+      <model-viewer src="artifact.glb" auto-rotate camera-controls style="height:300px;"></model-viewer>
+    </section>
+
+    <section class="panel">
+      <h2>Chat</h2>
+      <div id="chatBox" class="chat-box"></div>
+      <input id="chatInput" placeholder="Mensagem">
+      <button id="sendBtn">Enviar</button>
+    </section>
+
+  </main>
+</div>
+
+<!-- ORDEM CORRETA -->
+<script type="module" src="js/firebase.js"></script>
+<script type="module" src="js/auth.js"></script>
+
+<script src="js/menu.js"></script>
+<script src="js/mining.js"></script>
+<script src="js/chat.js"></script>
+
+</body>
+</html>
