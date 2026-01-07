@@ -4,14 +4,20 @@ const sendBtn = document.getElementById("sendBtn");
 
 const user = JSON.parse(localStorage.getItem("after_user"));
 
-sendBtn.onclick = () => {
+function sendMessage() {
   const msg = chatInput.value.trim();
-  if (!msg) return;
+  if (!msg || !user) return;
 
-  const el = document.createElement("div");
-  el.textContent = `${user.nickname} [${user.class} Lv${user.level}]: ${msg}`;
+  const msgEl = document.createElement("div");
+  msgEl.textContent = `${user.nickname} [${user.class} Lv${user.level}]: ${msg}`;
+  chatBox.appendChild(msgEl);
 
-  chatBox.appendChild(el);
   chatBox.scrollTop = chatBox.scrollHeight;
   chatInput.value = "";
-};
+}
+
+sendBtn.addEventListener("click", sendMessage);
+
+chatInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") sendMessage();
+});
