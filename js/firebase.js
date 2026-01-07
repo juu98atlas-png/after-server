@@ -1,23 +1,15 @@
-// js/firebase.js
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js";
+// firebase.js
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-// CONFIG DO SEU PROJETO
 const firebaseConfig = {
-  apiKey: "AIzaSyB2Zc2WQRZZt-jkU1HYeOupfHpLc-mSygo",
-  authDomain: "after-server.firebaseapp.com",
-  projectId: "after-server",
-  storageBucket: "after-server.appspot.com",
-  messagingSenderId: "835893170150",
-  appId: "1:835893170150:web:b2edbe4cb4616e57489027"
+  apiKey: "SUA_API_KEY",
+  authDomain: "SEU_PROJETO.firebaseapp.com",
+  projectId: "SEU_PROJETO",
+  storageBucket: "SEU_PROJETO.appspot.com",
+  messagingSenderId: "SEU_ID",
+  appId: "SEU_APP_ID"
 };
 
-// INICIALIZA
 const app = initializeApp(firebaseConfig);
-
-// EXPORTA GLOBALMENTE
-window.auth = getAuth(app);
-window.db = getFirestore(app);
-
-console.log("🔥 Firebase conectado com sucesso");
+export const auth = getAuth(app);
