@@ -1,7 +1,3 @@
-// ===============================
-// AUTH.JS — Login e Cadastro
-// ===============================
-
 const authPanel = document.getElementById("authPanel");
 const dashboard = document.getElementById("dashboard");
 
@@ -13,37 +9,13 @@ const loginBtn = document.getElementById("loginBtn");
 const registerBtn = document.getElementById("registerBtn");
 const authMessage = document.getElementById("authMessage");
 
-// ===============================
-// Helpers
-// ===============================
-
-function getUserKey(nickname) {
-  return `after_user_${nickname.toLowerCase()}`;
+function loadSession() {
+  const user = JSON.parse(localStorage.getItem("after_user"));
+  if (user) {
+    authPanel.style.display = "none";
+    dashboard.style.display = "block";
+  }
 }
-
-function saveCurrentUser(user) {
-  localStorage.setItem("after_current_user", user.nickname);
-}
-
-function getCurrentUser() {
-  const nickname = localStorage.getItem("after_current_user");
-  if (!nickname) return null;
-
-  const data = localStorage.getItem(getUserKey(nickname));
-  return data ? JSON.parse(data) : null;
-}
-
-function updateUI(user) {
-  document.getElementById("level").textContent = user.level;
-  document.getElementById("coins").textContent = user.coins;
-
-  authPanel.style.display = "none";
-  dashboard.style.display = "block";
-}
-
-// ===============================
-// Cadastro
-// ===============================
 
 registerBtn.addEventListener("click", () => {
   const nickname = nicknameInput.value.trim();
@@ -51,74 +23,39 @@ registerBtn.addEventListener("click", () => {
   const userClass = classSelect.value;
 
   if (!nickname || !password) {
-    authMessage.textContent = "Preencha apelido e senha.";
+    authMessage.textContent = "Preencha todos os campos.";
     return;
   }
 
-  const key = getUserKey(nickname);
-
-  if (localStorage.getItem(key)) {
-    authMessage.textContent = "Esse apelido já existe.";
-    return;
-  }
-
-  const newUser = {
+  const userData = {
     nickname,
     password,
     class: userClass,
     level: 1,
     xp: 0,
-    xpMax: 100,
-    coins: 0,
-    createdAt: Date.now()
+    coins: 0
   };
 
-  localStorage.setItem(key, JSON.stringify(newUser));
-  saveCurrentUser(newUser);
-
-  authMessage.textContent = "Cadastro realizado com sucesso!";
-  updateUI(newUser);
+  localStorage.setItem("after_user", JSON.stringify(userData));
+  authMessage.textContent = "Conta criada com sucesso!";
 });
 
-// ===============================
-// Login
-// ===============================
-
 loginBtn.addEventListener("click", () => {
-  const nickname = nicknameInput.value.trim();
-  const password = passwordInput.value.trim();
-
-  if (!nickname || !password) {
-    authMessage.textContent = "Preencha apelido e senha.";
-    return;
-  }
-
-  const key = getUserKey(nickname);
-  const data = localStorage.getItem(key);
-
-  if (!data) {
+  const stored = JSON.parse(localStorage.getItem("after_user"));
+  if (!stored) {
     authMessage.textContent = "Usuário não encontrado.";
     return;
   }
 
-  const user = JSON.parse(data);
-
-  if (user.password !== password) {
-    authMessage.textContent = "Senha incorreta.";
-    return;
-  }
-
-  saveCurrentUser(user);
-  updateUI(user);
-});
-
-// ===============================
-// Auto-login
-// ===============================
-
-window.addEventListener("load", () => {
-  const user = getCurrentUser();
-  if (user) {
-    updateUI(user);
+  if (
+    stored.nickname === nicknameInput.value.trim() &&
+    stored.password === passwordInput.value.trim()
+  ) {
+    authPanel.style.display = "none";
+    dashboard.style.display = "block";
+  } else {
+    authMessage.textContent = "Dados incorretos.";
   }
 });
+
+loadSession();
