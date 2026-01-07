@@ -6,127 +6,107 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
   <link rel="stylesheet" href="css/global.css">
-
-  <!-- Firebase CDN -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <link rel="stylesheet" href="css/login.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/chat.css">
 </head>
+
 <body>
 
-  <!-- LOGIN -->
-  <div id="authPanel" style="text-align:center; padding:20px;">
+  <!-- LOGIN / CADASTRO -->
+  <div id="authPanel" class="glass-panel">
     <h2>Entrar / Cadastrar</h2>
 
-    <input type="email" id="emailInput" placeholder="Email" style="width:80%; padding:10px; margin:8px 0;">
-    <input type="password" id="passwordInput" placeholder="Senha" style="width:80%; padding:10px; margin:8px 0;">
+    <input type="email" id="emailInput" placeholder="E-mail">
+    <input type="password" id="passwordInput" placeholder="Senha">
 
-    <br>
-    <button id="loginBtn" style="padding:10px 20px; margin:5px;">Entrar</button>
-    <button id="registerBtn" style="padding:10px 20px; margin:5px;">Cadastrar</button>
+    <button id="loginBtn">Entrar</button>
+    <button id="registerBtn">Cadastrar</button>
 
-    <p id="authMessage" style="margin-top:10px;"></p>
+    <p id="authMessage"></p>
   </div>
 
   <!-- DASHBOARD -->
-  <div id="dashboard" style="display:none; text-align:center; padding:20px;">
-    <h1>Bem-vindo ao AFTER.SERVER</h1>
-    <p>Login confirmado 🔥</p>
-    <button id="logoutBtn" style="padding:10px 20px; margin-top:15px;">Sair</button>
+  <div id="dashboard" style="display:none; text-align:center;">
+
+    <header class="topbar">
+      <button id="menuBtn">☰</button>
+      <h1>AFTER.SERVER</h1>
+      <div class="stats">
+        <span>Lvl <b id="level">1</b></span>
+        <span>Coins <b id="coins">0</b></span>
+      </div>
+    </header>
+
+    <nav id="topMenu" class="top-menu">
+      <ul>
+        <li>Perfil</li>
+        <li>Loja</li>
+        <li>Laboratório</li>
+      </ul>
+    </nav>
+
+    <main class="container">
+
+      <!-- MINERAÇÃO -->
+      <section class="panel">
+        <h2>Mineração</h2>
+        <div class="xp-wrapper">
+          <div class="xp-bar">
+            <div id="xpFill"></div>
+          </div>
+          <span id="xpText">0 / 100 XP</span>
+        </div>
+        <button id="mineBtn">⛏ Minerar</button>
+      </section>
+
+      <!-- ARTEFATO -->
+      <section class="panel">
+        <h2>Artefato Ativo</h2>
+        <model-viewer
+          src="artifact.glb"
+          auto-rotate
+          camera-controls
+          environment-image="neutral"
+          exposure="1.2"
+          shadow-intensity="1"
+          style="width:100%;height:320px;">
+        </model-viewer>
+        <p class="hint">Raridade: Épico • +XP • +Drop</p>
+      </section>
+
+      <!-- CHAT -->
+      <section class="panel">
+        <h2>Chat Global</h2>
+        <div id="chatBox" class="chat-box"></div>
+        <input id="chatInput" type="text" placeholder="Digite sua mensagem...">
+        <button id="sendBtn">Enviar</button>
+      </section>
+
+      <!-- RANKING -->
+      <section class="panel">
+        <h2>🏆 Ranking Global</h2>
+        <h3>Por Classe</h3>
+        <div id="classRanking"></div>
+        <h3 style="margin-top:12px;">Top Jogadores</h3>
+        <div id="playerRanking"></div>
+      </section>
+
+      <button id="logoutBtn" style="margin-top:20px;">Sair</button>
+
+    </main>
   </div>
 
-  <!-- Firebase e Auth -->
-  <script>
-    // Config Firebase
-    const firebaseConfig = {
-      apiKey: "AIzaSyB2Zc2WQRZZt-jkU1HYeOupfHpLc-mSygo",
-      authDomain: "after-server.firebaseapp.com",
-      projectId: "after-server",
-      storageBucket: "after-server.appspot.com",
-      messagingSenderId: "835893170150",
-      appId: "1:835893170150:web:b2edbe4cb4616e57489027",
-      measurementId: "G-Y19V9G8YFV"
-    };
+  <!-- Firebase Config -->
+  <script type="module" src="js/firebase.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/menu.js"></script>
+  <script src="js/mining.js"></script>
+  <script src="js/chat.js"></script>
+  <script src="js/ranking.js"></script>
 
-    // Inicializa Firebase
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-
-    // Elementos
-    const authPanel = document.getElementById("authPanel");
-    const dashboard = document.getElementById("dashboard");
-
-    const emailInput = document.getElementById("emailInput");
-    const passwordInput = document.getElementById("passwordInput");
-
-    const loginBtn = document.getElementById("loginBtn");
-    const registerBtn = document.getElementById("registerBtn");
-    const logoutBtn = document.getElementById("logoutBtn");
-
-    const authMessage = document.getElementById("authMessage");
-
-    function showMessage(msg, success=true){
-      authMessage.textContent = msg;
-      authMessage.style.color = success ? "lime" : "red";
-    }
-
-    // Cadastro
-    registerBtn.addEventListener("click", ()=>{
-      const email = emailInput.value.trim();
-      const password = passwordInput.value.trim();
-      if(!email || !password){ showMessage("Preencha email e senha.", false); return; }
-
-      auth.createUserWithEmailAndPassword(email, password)
-        .then((userCredential)=>{
-          showMessage("Conta criada com sucesso!");
-          emailInput.value = "";
-          passwordInput.value = "";
-        })
-        .catch((error)=>{
-          showMessage(error.message, false);
-        });
-    });
-
-    // Login
-    loginBtn.addEventListener("click", ()=>{
-      const email = emailInput.value.trim();
-      const password = passwordInput.value.trim();
-      if(!email || !password){ showMessage("Preencha email e senha.", false); return; }
-
-      auth.signInWithEmailAndPassword(email, password)
-        .then((userCredential)=>{
-          showMessage("Login efetuado com sucesso!");
-          authPanel.style.display = "none";
-          dashboard.style.display = "block";
-        })
-        .catch((error)=>{
-          showMessage(error.message, false);
-        });
-    });
-
-    // Logout
-    logoutBtn.addEventListener("click", ()=>{
-      auth.signOut().then(()=>{
-        showMessage("Logout efetuado!");
-        dashboard.style.display = "none";
-        authPanel.style.display = "block";
-      }).catch((error)=>{
-        showMessage(error.message, false);
-      });
-    });
-
-    // Mantém usuário logado
-    auth.onAuthStateChanged((user)=>{
-      if(user){
-        authPanel.style.display = "none";
-        dashboard.style.display = "block";
-        showMessage(`Bem-vindo ${user.email}!`);
-      } else {
-        authPanel.style.display = "block";
-        dashboard.style.display = "none";
-      }
-    });
-  </script>
 </body>
 </html>
