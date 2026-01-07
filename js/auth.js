@@ -10,13 +10,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const registerBtn = document.getElementById("registerBtn");
   const authMessage = document.getElementById("authMessage");
 
-  // Segurança básica
-  if (!loginBtn || !registerBtn) {
-    console.error("auth.js: Botões não encontrados");
-    return;
+  function showDashboard() {
+    authPanel.style.display = "none";
+    dashboard.style.display = "block";
   }
 
-  // REGISTRO
+  function showAuth() {
+    authPanel.style.display = "block";
+    dashboard.style.display = "none";
+  }
+
+  // AUTO LOGIN
+  const savedUser = localStorage.getItem("AFTER_USER");
+  if (savedUser) {
+    showDashboard();
+  }
+
+  // REGISTRAR
   registerBtn.addEventListener("click", () => {
     const nickname = nicknameInput.value.trim();
     const password = passwordInput.value.trim();
@@ -27,23 +37,17 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const users = JSON.parse(localStorage.getItem("users")) || {};
-
-    if (users[nickname]) {
-      authMessage.textContent = "Usuário já existe.";
-      return;
-    }
-
-    users[nickname] = {
+    const userData = {
+      nickname,
       password,
       class: userClass,
       level: 1,
-      coins: 0,
-      xp: 0
+      xp: 0,
+      coins: 0
     };
 
-    localStorage.setItem("users", JSON.stringify(users));
-    authMessage.textContent = "Cadastro realizado! Agora faça login.";
+    localStorage.setItem("AFTER_USER", JSON.stringify(userData));
+    authMessage.textContent = "Conta criada com sucesso!";
   });
 
   // LOGIN
@@ -51,20 +55,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const nickname = nicknameInput.value.trim();
     const password = passwordInput.value.trim();
 
-    const users = JSON.parse(localStorage.getItem("users")) || {};
+    const saved = localStorage.getItem("AFTER_USER");
 
-    if (!users[nickname] || users[nickname].password !== password) {
-      authMessage.textContent = "Login inválido.";
+    if (!saved) {
+      authMessage.textContent = "Nenhuma conta encontrada.";
       return;
     }
 
-    localStorage.setItem("currentUser", nickname);
+    const user = JSON.parse(saved);
 
-    // Atualiza HUD
-    document.getElementById("level").textContent = users[nickname].level;
-    document.getElementById("coins").textContent = users[nickname].coins;
+    if (nickname !== user.nickname || password !== user.password) {
+      authMessage.textContent = "Apelido ou senha incorretos.";
+      return;
+    }
 
-    authPanel.style.display = "none";
-    dashboard.style.display = "block";
+    showDashboard();
   });
 });
