@@ -5,25 +5,25 @@
   <title>AFTER.SERVER</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
-  <!-- Firebase CDN -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/login.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/chat.css">
+
+  <!-- Firebase -->
+  <script type="module" src="js/firebase.js"></script>
 </head>
 <body>
 
-  <div class="auth-box">
-    <div id="dashboard" style="display:none; text-align:center;">
-  <h1>Bem-vindo ao AFTER.SERVER</h1>
-  <p>Login confirmado 🔥</p>
+  <!-- LOGIN -->
+  <div id="authPanel">
+    <h2>Entrar / Cadastrar</h2>
 
-  <button id="logoutBtn">Sair</button>
-    </div>
-    <h1>AFTER.SERVER</h1>
-
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Senha">
+    <input type="email" id="emailInput" placeholder="Email">
+    <input type="password" id="passwordInput" placeholder="Senha">
 
     <button id="loginBtn">Entrar</button>
     <button id="registerBtn">Cadastrar</button>
@@ -31,7 +31,93 @@
     <p id="authMessage"></p>
   </div>
 
-  <script src="js/firebase.js"></script>
-  <script src="js/auth.js"></script>
+  <!-- DASHBOARD -->
+  <div id="dashboard" style="display:none; text-align:center;">
+
+    <h1>Bem-vindo ao AFTER.SERVER</h1>
+    <p>Login confirmado 🔥</p>
+    <button id="logoutBtn">Sair</button>
+
+    <header class="topbar">
+      <button id="menuBtn">☰</button>
+      <h1>AFTER.SERVER</h1>
+      <div class="stats">
+        <span>Lvl <b id="level">1</b></span>
+        <span>Coins <b id="coins">0</b></span>
+      </div>
+    </header>
+
+    <nav id="topMenu" class="top-menu">
+      <ul>
+        <li>Perfil</li>
+        <li>Loja</li>
+        <li>Laboratório</li>
+      </ul>
+    </nav>
+
+    <main class="container">
+
+      <!-- MINERAÇÃO -->
+      <section class="panel">
+        <h2>Mineração</h2>
+
+        <div class="xp-wrapper">
+          <div class="xp-bar">
+            <div id="xpFill"></div>
+          </div>
+          <span id="xpText">0 / 100 XP</span>
+        </div>
+
+        <button id="mineBtn">⛏ Minerar</button>
+      </section>
+
+      <!-- ARTEFATO -->
+      <section class="panel">
+        <h2>Artefato Ativo</h2>
+
+        <model-viewer
+          src="artifact.glb"
+          auto-rotate
+          camera-controls
+          environment-image="neutral"
+          exposure="1.2"
+          shadow-intensity="1"
+          style="width:100%;height:320px;">
+        </model-viewer>
+
+        <p class="hint">Raridade: Épico • +XP • +Drop</p>
+      </section>
+
+      <!-- CHAT -->
+      <section class="panel">
+        <h2>Chat Global</h2>
+
+        <div id="chatBox" class="chat-box"></div>
+
+        <input id="chatInput" type="text" placeholder="Digite sua mensagem...">
+        <button id="sendBtn">Enviar</button>
+      </section>
+
+      <!-- RANKING -->
+      <section class="panel">
+        <h2>🏆 Ranking Global</h2>
+
+        <h3>Por Classe</h3>
+        <div id="classRanking"></div>
+
+        <h3 style="margin-top:12px;">Top Jogadores</h3>
+        <div id="playerRanking"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script type="module" src="js/auth.js"></script>
+  <script src="js/menu.js"></script>
+  <script src="js/mining.js"></script>
+  <script src="js/chat.js"></script>
+  <script src="js/ranking.js"></script>
+
 </body>
 </html>
