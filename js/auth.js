@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-
   const authPanel = document.getElementById("authPanel");
   const dashboard = document.getElementById("dashboard");
 
@@ -11,21 +10,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const registerBtn = document.getElementById("registerBtn");
   const authMessage = document.getElementById("authMessage");
 
-  if (!authPanel || !dashboard) {
-    console.error("Painéis não encontrados");
+  // Segurança básica
+  if (!loginBtn || !registerBtn) {
+    console.error("auth.js: Botões não encontrados");
     return;
   }
 
-  function showDashboard() {
-    authPanel.style.display = "none";
-    dashboard.style.display = "block";
-  }
-
-  function loadSession() {
-    const user = JSON.parse(localStorage.getItem("after_user"));
-    if (user) showDashboard();
-  }
-
+  // REGISTRO
   registerBtn.addEventListener("click", () => {
     const nickname = nicknameInput.value.trim();
     const password = passwordInput.value.trim();
@@ -36,37 +27,44 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const userData = {
-      nickname,
-      password,
-      class: userClass,
-      level: 1,
-      xp: 0,
-      coins: 0
-    };
+    const users = JSON.parse(localStorage.getItem("users")) || {};
 
-    localStorage.setItem("after_user", JSON.stringify(userData));
-    authMessage.textContent = "Conta criada! Agora entre.";
-  });
-
-  loginBtn.addEventListener("click", () => {
-    const stored = JSON.parse(localStorage.getItem("after_user"));
-
-    if (!stored) {
-      authMessage.textContent = "Nenhuma conta encontrada.";
+    if (users[nickname]) {
+      authMessage.textContent = "Usuário já existe.";
       return;
     }
 
-    if (
-      stored.nickname === nicknameInput.value.trim() &&
-      stored.password === passwordInput.value.trim()
-    ) {
-      showDashboard();
-    } else {
-      authMessage.textContent = "Apelido ou senha incorretos.";
-    }
+    users[nickname] = {
+      password,
+      class: userClass,
+      level: 1,
+      coins: 0,
+      xp: 0
+    };
+
+    localStorage.setItem("users", JSON.stringify(users));
+    authMessage.textContent = "Cadastro realizado! Agora faça login.";
   });
 
-  loadSession();
+  // LOGIN
+  loginBtn.addEventListener("click", () => {
+    const nickname = nicknameInput.value.trim();
+    const password = passwordInput.value.trim();
 
+    const users = JSON.parse(localStorage.getItem("users")) || {};
+
+    if (!users[nickname] || users[nickname].password !== password) {
+      authMessage.textContent = "Login inválido.";
+      return;
+    }
+
+    localStorage.setItem("currentUser", nickname);
+
+    // Atualiza HUD
+    document.getElementById("level").textContent = users[nickname].level;
+    document.getElementById("coins").textContent = users[nickname].coins;
+
+    authPanel.style.display = "none";
+    dashboard.style.display = "block";
+  });
 });
