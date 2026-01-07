@@ -1,45 +1,42 @@
-const mineBtn = document.getElementById("mineBtn");
-const xpFill = document.getElementById("xpFill");
-const xpText = document.getElementById("xpText");
-const levelEl = document.getElementById("level");
-const coinsEl = document.getElementById("coins");
+document.addEventListener("DOMContentLoaded", () => {
+  const saved = localStorage.getItem("AFTER_USER");
+  if (!saved) return;
 
-let user = JSON.parse(localStorage.getItem("after_user"));
+  let user = JSON.parse(saved);
 
-if (user) {
-  let xp = user.xp || 0;
-  let level = user.level || 1;
-  let coins = user.coins || 0;
-  let xpNeeded = 100 + level * 25;
+  const mineBtn = document.getElementById("mineBtn");
+  const xpFill = document.getElementById("xpFill");
+  const xpText = document.getElementById("xpText");
+  const levelEl = document.getElementById("level");
+  const coinsEl = document.getElementById("coins");
+
+  if (!mineBtn) return;
 
   function updateUI() {
-    levelEl.textContent = level;
-    coinsEl.textContent = coins;
-    xpFill.style.width = Math.min((xp / xpNeeded) * 100, 100) + "%";
-    xpText.textContent = `${xp} / ${xpNeeded} XP`;
+    levelEl.textContent = user.level;
+    coinsEl.textContent = user.coins;
+
+    const percent = Math.min((user.xp / 100) * 100, 100);
+    xpFill.style.width = percent + "%";
+    xpText.textContent = `${user.xp} / 100 XP`;
   }
 
   updateUI();
 
   mineBtn.addEventListener("click", () => {
-    const gain = Math.floor(Math.random() * 12) + 6;
-    xp += gain;
+    const gain = Math.floor(Math.random() * 10) + 5;
+    user.xp += gain;
 
     if (Math.random() < 0.35) {
-      coins++;
+      user.coins += 1;
     }
 
-    if (xp >= xpNeeded) {
-      xp -= xpNeeded;
-      level++;
-      xpNeeded = 100 + level * 25;
+    if (user.xp >= 100) {
+      user.xp -= 100;
+      user.level += 1;
     }
 
-    user.xp = xp;
-    user.level = level;
-    user.coins = coins;
-
-    localStorage.setItem("after_user", JSON.stringify(user));
+    localStorage.setItem("AFTER_USER", JSON.stringify(user));
     updateUI();
   });
-}
+});
