@@ -1,30 +1,33 @@
+let user = JSON.parse(localStorage.getItem("after_user"));
+
 const mineBtn = document.getElementById("mineBtn");
 const xpFill = document.getElementById("xpFill");
 const xpText = document.getElementById("xpText");
 const levelEl = document.getElementById("level");
 const coinsEl = document.getElementById("coins");
 
-mineBtn.addEventListener("click", () => {
+levelEl.textContent = user.level;
+coinsEl.textContent = user.coins;
+
+mineBtn.onclick = () => {
   const gain = Math.floor(Math.random() * 12) + 6;
-  currentUser.xp += gain;
+  user.xp += gain;
 
   if (Math.random() < 0.35) {
-    currentUser.coins++;
+    user.coins++;
   }
 
-  if (currentUser.xp >= 100) {
-    currentUser.xp -= 100;
-    currentUser.level++;
+  if (user.xp >= user.xpNeeded) {
+    user.xp -= user.xpNeeded;
+    user.level++;
+    user.xpNeeded = Math.floor(user.xpNeeded * 1.35);
   }
 
-  levelEl.textContent = currentUser.level;
-  coinsEl.textContent = currentUser.coins;
-  const percent = Math.min((currentUser.xp / 100) * 100, 100);
-  xpFill.style.width = percent + "%";
-  xpText.textContent = `${currentUser.xp} / 100 XP`;
+  localStorage.setItem("after_user", JSON.stringify(user));
 
-  // Salva progresso
-  const idx = users.findIndex(u => u.nickname === currentUser.nickname);
-  if (idx > -1) users[idx] = currentUser;
-  localStorage.setItem("users", JSON.stringify(users));
-});
+  levelEl.textContent = user.level;
+  coinsEl.textContent = user.coins;
+
+  xpFill.style.width = `${(user.xp / user.xpNeeded) * 100}%`;
+  xpText.textContent = `${user.xp} / ${user.xpNeeded} XP`;
+};
