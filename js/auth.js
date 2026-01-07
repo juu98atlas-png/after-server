@@ -1,59 +1,33 @@
-// auth.js
-import { auth } from "./firebase.js";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
 const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
 const loginBtn = document.getElementById("loginBtn");
 const registerBtn = document.getElementById("registerBtn");
-const logoutBtn = document.getElementById("logoutBtn");
-const statusText = document.getElementById("status");
-
-// REGISTRAR
-registerBtn.addEventListener("click", async () => {
-  try {
-    await createUserWithEmailAndPassword(
-      auth,
-      emailInput.value,
-      passwordInput.value
-    );
-    statusText.innerText = "Conta criada com sucesso!";
-  } catch (error) {
-    statusText.innerText = error.message;
-  }
-});
+const authMessage = document.getElementById("authMessage");
 
 // LOGIN
-loginBtn.addEventListener("click", async () => {
-  try {
-    await signInWithEmailAndPassword(
-      auth,
-      emailInput.value,
-      passwordInput.value
-    );
-    statusText.innerText = "Login realizado!";
-  } catch (error) {
-    statusText.innerText = error.message;
-  }
+loginBtn.addEventListener("click", () => {
+  const email = emailInput.value;
+  const password = passwordInput.value;
+
+  auth.signInWithEmailAndPassword(email, password)
+    .then(() => {
+      authMessage.innerText = "Login realizado com sucesso!";
+    })
+    .catch(error => {
+      authMessage.innerText = error.message;
+    });
 });
 
-// LOGOUT
-logoutBtn.addEventListener("click", async () => {
-  await signOut(auth);
-});
+// CADASTRO
+registerBtn.addEventListener("click", () => {
+  const email = emailInput.value;
+  const password = passwordInput.value;
 
-// OBSERVADOR DE LOGIN
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    statusText.innerText = `Logado como ${user.email}`;
-    logoutBtn.style.display = "block";
-  } else {
-    statusText.innerText = "Não logado";
-    logoutBtn.style.display = "none";
-  }
+  auth.createUserWithEmailAndPassword(email, password)
+    .then(() => {
+      authMessage.innerText = "Conta criada com sucesso!";
+    })
+    .catch(error => {
+      authMessage.innerText = error.message;
+    });
 });
