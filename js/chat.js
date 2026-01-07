@@ -1,23 +1,25 @@
-const chatBox = document.getElementById("chatBox");
-const chatInput = document.getElementById("chatInput");
-const sendBtn = document.getElementById("sendBtn");
+document.addEventListener("DOMContentLoaded", () => {
+  const saved = localStorage.getItem("AFTER_USER");
+  if (!saved) return;
 
-const user = JSON.parse(localStorage.getItem("after_user"));
+  const user = JSON.parse(saved);
 
-function sendMessage() {
-  const msg = chatInput.value.trim();
-  if (!msg || !user) return;
+  const chatBox = document.getElementById("chatBox");
+  const chatInput = document.getElementById("chatInput");
+  const sendBtn = document.getElementById("sendBtn");
 
-  const msgEl = document.createElement("div");
-  msgEl.textContent = `${user.nickname} [${user.class} Lv${user.level}]: ${msg}`;
-  chatBox.appendChild(msgEl);
+  if (!sendBtn) return;
 
-  chatBox.scrollTop = chatBox.scrollHeight;
-  chatInput.value = "";
-}
+  sendBtn.addEventListener("click", () => {
+    const msg = chatInput.value.trim();
+    if (!msg) return;
 
-sendBtn.addEventListener("click", sendMessage);
+    const line = document.createElement("div");
+    line.textContent = `${user.nickname} [${user.class} Lv${user.level}]: ${msg}`;
 
-chatInput.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") sendMessage();
+    chatBox.appendChild(line);
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    chatInput.value = "";
+  });
 });
