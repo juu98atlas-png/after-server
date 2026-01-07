@@ -1,74 +1,77 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const authPanel = document.getElementById("authPanel");
-  const dashboard = document.getElementById("dashboard");
+// auth.js
 
-  const nicknameInput = document.getElementById("nicknameInput");
-  const passwordInput = document.getElementById("passwordInput");
-  const classSelect = document.getElementById("classSelect");
+const loginBtn = document.getElementById("loginBtn");
+const registerBtn = document.getElementById("registerBtn");
+const authMessage = document.getElementById("authMessage");
 
-  const loginBtn = document.getElementById("loginBtn");
-  const registerBtn = document.getElementById("registerBtn");
-  const authMessage = document.getElementById("authMessage");
+const nicknameInput = document.getElementById("nicknameInput");
+const classSelect = document.getElementById("classSelect");
+const emailInput = document.getElementById("emailInput");
+const passwordInput = document.getElementById("passwordInput");
 
-  function showDashboard() {
-    authPanel.style.display = "none";
-    dashboard.style.display = "block";
+const authPanel = document.getElementById("authPanel");
+const dashboard = document.getElementById("dashboard");
+
+// CADASTRAR
+registerBtn.addEventListener("click", async () => {
+  const email = emailInput.value.trim();
+  const password = passwordInput.value.trim();
+  const nickname = nicknameInput.value.trim();
+  const userClass = classSelect.value;
+
+  if (!email || !password || !nickname) {
+    authMessage.textContent = "Preencha todos os campos";
+    return;
   }
 
-  function showAuth() {
-    authPanel.style.display = "block";
-    dashboard.style.display = "none";
-  }
+  try {
+    const cred = await auth.createUserWithEmailAndPassword(email, password);
 
-  // AUTO LOGIN
-  const savedUser = localStorage.getItem("AFTER_USER");
-  if (savedUser) {
-    showDashboard();
-  }
-
-  // REGISTRAR
-  registerBtn.addEventListener("click", () => {
-    const nickname = nicknameInput.value.trim();
-    const password = passwordInput.value.trim();
-    const userClass = classSelect.value;
-
-    if (!nickname || !password) {
-      authMessage.textContent = "Preencha todos os campos.";
-      return;
-    }
-
-    const userData = {
+    await db.collection("users").doc(cred.user.uid).set({
       nickname,
-      password,
       class: userClass,
       level: 1,
-      xp: 0,
-      coins: 0
-    };
+      coins: 0,
+      createdAt: new Date()
+    });
 
-    localStorage.setItem("AFTER_USER", JSON.stringify(userData));
     authMessage.textContent = "Conta criada com sucesso!";
-  });
+  } catch (err) {
+    authMessage.textContent = err.message;
+  }
+});
 
-  // LOGIN
-  loginBtn.addEventListener("click", () => {
-    const nickname = nicknameInput.value.trim();
-    const password = passwordInput.value.trim();
+// LOGIN
+loginBtn.addEventListener("click", async () => {
+  const email = emailInput.value.trim();
+  const password = passwordInput.value.trim();
 
-    const saved = localStorage.getItem("AFTER_USER");
+  if (!email || !password) {
+    authMessage.textContent = "Informe email e senha";
+    return;
+  }
 
-    if (!saved) {
-      authMessage.textContent = "Nenhuma conta encontrada.";
-      return;
-    }
+  try {
+    await auth.signInWithEmailAndPassword(email, password);
+  } catch (err) {
+    authMessage.textContent = err.message;
+  }
+});
 
-    const user = JSON.parse(saved);
+// OBSERVADOR DE LOGIN (A PARTE MAIS IMPORTANTE)
+auth.onAuthStateChanged(async (user) => {
+  if (!user) return;
 
-    if (nickname !== user.nickname || password !== user.password) {
-      authMessage.textContent = "Apelido ou senha incorretos.";
-      return;
-    }
+  const doc = await db.collection("users").doc(user.uid).get();
+  const data = doc.data();
 
-    showDashboard();
-  });
+  // Salva globalmente (o resto do app vai usar isso depois)
+  window.currentUser = {
+    uid: user.uid,
+    ...data
+  };
+
+  // Mostra dashboard
+  authPanel.style.display = "none";
+  dashboard.style.display = "block";
 });
